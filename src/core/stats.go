@@ -1,10 +1,10 @@
-package stats
+package core
 
 import (
-	"github.com/xarxziux/freecoco/src/models.go"
+	"github.com/xarxziux/freecoco/src/models"
 )
 
-func getTerrainType(terrain string) models.TerrainType {
+/*func GetTerrainType(terrain string) models.TerrainType {
 	switch terrain {
 	case "deep ocean":
 	case "desert":
@@ -27,9 +27,9 @@ func getTerrainType(terrain string) models.TerrainType {
 	}
 
 	return models.NoTerrain
-}
+}*/
 
-func getCitySize(size int) models.CityType {
+func GetCitySize(size int) models.CityType {
 	if size == 0 {
 		return models.NoCity
 	}
@@ -41,8 +41,8 @@ func getCitySize(size int) models.CityType {
 	return models.City
 }
 
-func getCityBonus(city CityStats) float32 {
-	citySize := getCitySize(city.Size)
+func GetCityBonus(city models.CityStats) float32 {
+	citySize := GetCitySize(city.Size)
 
 	if citySize == models.NoCity {
 		return 1

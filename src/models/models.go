@@ -1,17 +1,8 @@
 package models
 
-type TerrainType int
 type CityType int
-type UnitType int
-
-const (
-	NoTerrain TerrainType = iota
-	Flat
-	Shallow
-	Rough
-	Hills
-	Mountains
-)
+type UnitClass int
+type TerrainClass int
 
 const (
 	NoCity CityType = iota
@@ -20,7 +11,7 @@ const (
 )
 
 const (
-	NoUnit UnitType = iota
+	NoUnit UnitClass = iota
 	Air
 	BigLand
 	BigSiege
@@ -33,7 +24,23 @@ const (
 	Trireme
 )
 
+const (
+	NoTerrain TerrainClass = iota
+	LandClass
+	OceanicClass
+)
+
 var VeteranLevels = [10]float32{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
+
+type TerrainType struct {
+	Name         string
+	Class        TerrainClass
+	DefenseBonus int
+	CanHaveRiver bool
+	NoCities     bool
+	NoFortify    bool
+	UnsafeCoast  bool
+}
 
 type CityStats struct {
 	Size       int  `json:"size"`
@@ -53,7 +60,7 @@ type DefenceStats struct {
 
 type UnitDetails struct {
 	Name       string
-	Class      UnitType
+	Class      UnitClass
 	Attack     int
 	Defense    int
 	HP         int

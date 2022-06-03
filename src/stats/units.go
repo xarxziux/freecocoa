@@ -1,13 +1,11 @@
-package main
+package stats
 
 import (
-	"github.com/xarxziux/freecoco/src/models.go"
+	"github.com/xarxziux/freecoco/src/models"
 )
 
-/*
- * This file lists all units combat stats as extracted from units.ruleset.
- */
-var UnitStats = map[string]UnitDetails{
+// UnitStats lists all units combat stats as extracted from units.ruleset.
+var UnitStats = map[string]models.UnitDetails{
 	"settlers": {
 		Name:    "Settlers",
 		Class:   models.SmallLand,
@@ -161,6 +159,7 @@ var UnitStats = map[string]UnitDetails{
 		FP:      1,
 	},
 	"mech_inf": {
+		Name:    "Mech. Inf.",
 		Class:   models.BigLand,
 		Attack:  6,
 		Defense: 6,

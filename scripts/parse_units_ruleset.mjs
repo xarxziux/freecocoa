@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 import {createInterface} from 'readline'
-import  {createReadStream} from 'fs'
+import {createReadStream} from 'fs'
 
 const unitRX = /\[\??unit_(?<unit>\w*)\]/
-const nameRX = /name *= *_\("(?:\?unit:)?(?<name>[\w| ]*)"\)/
+const nameRX = /name *= *_\("(?:\?unit:)?(?<name>[\w| |\.]*)"\)/
 const classRX = /class *= "(?<class>[\w| ]*)"/
 const attackRX = /attack *= (?<attack>\d*)/
 const defenseRX = /defense *= (?<defense>\d*)/
