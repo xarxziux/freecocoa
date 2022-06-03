@@ -20,8 +20,6 @@ const main = () => {
         terminal: false
     });
 
-    console.log("Units := []UnitType{")
-
     file.on('line', (line) => {
         parseLine(line)
     });
@@ -42,7 +40,7 @@ const parseLine = (line) => {
 
     const unitClass = classRX.exec(line)
     if (unitClass !== null) {
-        console.log(`\t\tClass: ${unitClass.groups.class.replace(/ /g, "")},`)
+        console.log(`\t\tClass: models.${unitClass.groups.class.replace(/ /g, "")},`)
         return
     }
 
