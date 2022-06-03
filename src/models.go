@@ -52,6 +52,11 @@ type DefenceStats struct {
 }
 
 type UnitDetails struct {
-	Defence int
-	Type    UnitType
+	Name       string
+	Class      UnitType
+	Attack     int
+	Defense    int
+	HP         int
+	FP         int
+	CityBuster bool
 }

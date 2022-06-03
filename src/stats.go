@@ -62,3 +62,5 @@ func getCityBonus(city CityStats) float32 {
 
 	return 0
 }
+
+//func getDefenceStats(city CityStats) float32 {
