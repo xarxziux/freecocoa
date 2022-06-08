@@ -1,4 +1,4 @@
-module github.com/xarxziux/freecoco
+module github.com/xarxziux/freecocoa
 
 go 1.17
 
