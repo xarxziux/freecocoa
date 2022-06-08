@@ -1,7 +1,7 @@
 package stats
 
 import (
-	"github.com/xarxziux/freecoco/src/models"
+	"github.com/xarxziux/freecocoa/src/models"
 )
 
 // UnitStats lists all units combat stats as extracted from units.ruleset.

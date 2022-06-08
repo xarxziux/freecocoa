@@ -1,7 +1,7 @@
 package models
 
 type CityType int
-type UnitClass int
+type UnitClassName int
 type TerrainClass int
 
 const (
@@ -11,7 +11,7 @@ const (
 )
 
 const (
-	NoUnit UnitClass = iota
+	NoUnit UnitClassName = iota
 	Air
 	BigLand
 	BigSiege
@@ -58,12 +58,27 @@ type DefenceStats struct {
 	Fortress  bool      `json:"fortress"`
 }
 
+type UnitClass struct {
+	Name             UnitClassName
+	TerrainDefense   bool
+	Missile          bool
+	Unreachable      bool
+	CanFortify       bool
+	AttackNonNative  bool
+	AttFromNonNative bool
+}
+
 type UnitDetails struct {
-	Name       string
-	Class      UnitClass
-	Attack     int
-	Defense    int
-	HP         int
-	FP         int
-	CityBuster bool
+	Name             string
+	Class            UnitClass
+	Attack           int
+	Defense          int
+	HP               int
+	FP               int
+	CityBuster       bool
+	AirAttacker      bool
+	Horse            bool
+	Submarine        bool
+	BadCityDefender  bool
+	OnlyNativeAttack bool
 }

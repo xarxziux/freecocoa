@@ -1,7 +1,7 @@
 package core
 
 import (
-	"github.com/xarxziux/freecoco/src/models"
+	"github.com/xarxziux/freecocoa/src/models"
 )
 
 /*func GetTerrainType(terrain string) models.TerrainType {
