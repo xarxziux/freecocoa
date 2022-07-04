@@ -10,16 +10,38 @@ import (
 // UnitClassStats lists all unit classes and combat-relevant flags as extracted
 // from units.ruleset.
 var UnitClassStats = map[string]models.UnitClass{
-	"missile":    {},
-	"land":       {},
-	"land_small": {},
-	"land_big":   {},
-	"land_siege": {},
-	"merchant":   {},
-	"sea":        {},
-	"trireme":    {},
-	"heli":       {},
-	"air":        {},
+	"missile": {
+		Missile:     true,
+		Unreachable: true,
+	},
+	"land": {
+		TerrainDefense: true,
+		CanFortify:     true,
+	},
+	"land_small": {
+		TerrainDefense: true,
+		CanFortify:     true,
+	},
+	"land_big": {
+		CanFortify: true,
+	},
+	"land_siege": {
+		CanFortify:      true,
+		AttackNonNative: true,
+	},
+	"merchant": {
+		TerrainDefense: true,
+	},
+	"sea": {
+		AttackNonNative: true,
+	},
+	"trireme": {},
+	"heli": {
+		Unreachable: true,
+	},
+	"air": {
+		Unreachable: true,
+	},
 }
 
 // UnitStats lists all units combat stats and combat-relevant flags as extracted

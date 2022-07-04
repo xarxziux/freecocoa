@@ -1,79 +1,89 @@
 package stats
 
+// AUTO-GENERATED FILE - DO NOT EDIT
+// USE THE SCRIPT parse_terrain_ruleset.js TO RE-GENERATE IF NEEDED
+
 import (
 	"github.com/xarxziux/freecocoa/src/models"
 )
 
 // TerrainStats lists all units combat stats as extracted from units.ruleset.
 var TerrainStats = map[string]models.TerrainType{
-	"inaccesible": {
-		Name:         "Inaccessible",
+	"Inaccessible": {
 		Class:        models.LandClass,
 		DefenseBonus: 0,
+		NoCities:     true,
+		UnsafeCoast:  true,
 	},
-	"lake": {
-		Name:         "Lake",
+	"Lake": {
 		Class:        models.OceanicClass,
 		DefenseBonus: 10,
+		NoCities:     true,
+		NoFortify:    true,
 	},
-	"ocean": {
-		Name:         "Ocean",
+	"Ocean": {
 		Class:        models.OceanicClass,
 		DefenseBonus: 10,
+		NoCities:     true,
+		UnsafeCoast:  true,
+		NoFortify:    true,
 	},
-	"deep_ocean": {
-		Name:         "Deep Ocean",
+	"Deep Ocean": {
 		Class:        models.OceanicClass,
 		DefenseBonus: 0,
+		NoCities:     true,
+		UnsafeCoast:  true,
+		NoFortify:    true,
 	},
-	"glacier": {
-		Name:         "Glacier",
+	"Glacier": {
 		Class:        models.LandClass,
 		DefenseBonus: 0,
+		CanHaveRiver: true,
 	},
-	"desert": {
-		Name:         "Desert",
+	"Desert": {
 		Class:        models.LandClass,
 		DefenseBonus: 0,
+		CanHaveRiver: true,
 	},
-	"forest": {
-		Name:         "Forest",
+	"Forest": {
 		Class:        models.LandClass,
 		DefenseBonus: 25,
+		CanHaveRiver: true,
 	},
-	"grassland": {
-		Name:         "Grassland",
+	"Grassland": {
 		Class:        models.LandClass,
 		DefenseBonus: 0,
+		CanHaveRiver: true,
 	},
-	"hills": {
-		Name:         "Hills",
+	"Hills": {
 		Class:        models.LandClass,
 		DefenseBonus: 50,
+		CanHaveRiver: true,
 	},
-	"jungle": {
-		Name:         "Jungle",
+	"Jungle": {
 		Class:        models.LandClass,
 		DefenseBonus: 25,
+		CanHaveRiver: true,
 	},
-	"mountains": {
-		Name:         "Mountains",
+	"Mountains": {
 		Class:        models.LandClass,
 		DefenseBonus: 100,
+		NoCities:     true,
+		CanHaveRiver: true,
 	},
-	"plains": {
-		Name:         "Plains",
+	"Plains": {
 		Class:        models.LandClass,
 		DefenseBonus: 0,
+		CanHaveRiver: true,
 	},
-	"swamp": {
-		Name:         "Swamp",
+	"Swamp": {
 		Class:        models.LandClass,
 		DefenseBonus: 25,
+		CanHaveRiver: true,
 	},
-	"tundra": {
-		Name:         "Tundra",
+	"Tundra": {
 		Class:        models.LandClass,
 		DefenseBonus: 0,
+		CanHaveRiver: true,
 	},
 }
