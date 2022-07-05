@@ -2,7 +2,7 @@
 
 import NReadLines from 'n-readlines'
 
-const headerRX = /^\[terrain_(?<terrain>.*)\]/
+const headerRX = /^\[terrain_(?<header>\w*)\]/
 const nameRX = /name *= *_\("(?:\?name:)?(?<name>[\w| |.]*)"\)/
 const classRX = /class *= "(?<class>[\w| ]*)"/
 const defenseRX = /defense_bonus *= (?<defense>\d*)/
@@ -28,7 +28,9 @@ var TerrainStats = map[string]models.TerrainType{`)
 
   while (line) {
     const header = headerRX.exec(line)
+
     if (header !== null) {
+      console.log(`\t"${header.groups.header}": {`)
       readClassSection(lines)
     }
 
@@ -41,10 +43,10 @@ var TerrainStats = map[string]models.TerrainType{`)
 const readClassSection = (lines) => {
   let line = lines.next()
 
-  while (line) {
+  while (true) {
     const name = nameRX.exec(line)
     if (name !== null) {
-      console.log(`\t"${name.groups.name}": {`)
+      console.log(`\t\tName: "${name.groups.name}",`)
       line = lines.next()
     }
 

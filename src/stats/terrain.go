@@ -9,79 +9,93 @@ import (
 
 // TerrainStats lists all units combat stats as extracted from units.ruleset.
 var TerrainStats = map[string]models.TerrainType{
-	"Inaccessible": {
+	"inaccesible": {
+		Name:         "Inaccessible",
 		Class:        models.LandClass,
 		DefenseBonus: 0,
 		NoCities:     true,
 		UnsafeCoast:  true,
 	},
-	"Lake": {
+	"lake": {
+		Name:         "Lake",
 		Class:        models.OceanicClass,
 		DefenseBonus: 10,
 		NoCities:     true,
 		NoFortify:    true,
 	},
-	"Ocean": {
+	"ocean": {
+		Name:         "Ocean",
 		Class:        models.OceanicClass,
 		DefenseBonus: 10,
 		NoCities:     true,
 		UnsafeCoast:  true,
 		NoFortify:    true,
 	},
-	"Deep Ocean": {
+	"deep_ocean": {
+		Name:         "Deep Ocean",
 		Class:        models.OceanicClass,
 		DefenseBonus: 0,
 		NoCities:     true,
 		UnsafeCoast:  true,
 		NoFortify:    true,
 	},
-	"Glacier": {
+	"glacier": {
+		Name:         "Glacier",
 		Class:        models.LandClass,
 		DefenseBonus: 0,
 		CanHaveRiver: true,
 	},
-	"Desert": {
+	"desert": {
+		Name:         "Desert",
 		Class:        models.LandClass,
 		DefenseBonus: 0,
 		CanHaveRiver: true,
 	},
-	"Forest": {
+	"forest": {
+		Name:         "Forest",
 		Class:        models.LandClass,
 		DefenseBonus: 25,
 		CanHaveRiver: true,
 	},
-	"Grassland": {
+	"grassland": {
+		Name:         "Grassland",
 		Class:        models.LandClass,
 		DefenseBonus: 0,
 		CanHaveRiver: true,
 	},
-	"Hills": {
+	"hills": {
+		Name:         "Hills",
 		Class:        models.LandClass,
 		DefenseBonus: 50,
 		CanHaveRiver: true,
 	},
-	"Jungle": {
+	"jungle": {
+		Name:         "Jungle",
 		Class:        models.LandClass,
 		DefenseBonus: 25,
 		CanHaveRiver: true,
 	},
-	"Mountains": {
+	"mountains": {
+		Name:         "Mountains",
 		Class:        models.LandClass,
 		DefenseBonus: 100,
 		NoCities:     true,
 		CanHaveRiver: true,
 	},
-	"Plains": {
+	"plains": {
+		Name:         "Plains",
 		Class:        models.LandClass,
 		DefenseBonus: 0,
 		CanHaveRiver: true,
 	},
-	"Swamp": {
+	"swamp": {
+		Name:         "Swamp",
 		Class:        models.LandClass,
 		DefenseBonus: 25,
 		CanHaveRiver: true,
 	},
-	"Tundra": {
+	"tundra": {
+		Name:         "Tundra",
 		Class:        models.LandClass,
 		DefenseBonus: 0,
 		CanHaveRiver: true,
