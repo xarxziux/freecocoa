@@ -11,7 +11,7 @@ const (
 )
 
 const (
-	NoUnit UnitClassName = iota
+	NoClass UnitClassName = iota
 	Air
 	BigLand
 	BigSiege
@@ -23,6 +23,22 @@ const (
 	SmallLand
 	Trireme
 )
+
+func (c UnitClassName) ToString() string {
+	return []string{
+		"NoClass",
+		"Air",
+		"BigLand",
+		"BigSiege",
+		"Helicopter",
+		"Land",
+		"Merchant",
+		"Missile",
+		"Sea",
+		"SmallLand",
+		"Trireme",
+	}[c]
+}
 
 const (
 	NoTerrain TerrainClass = iota
@@ -43,9 +59,10 @@ type TerrainType struct {
 }
 
 type CityStats struct {
-	Size       int  `json:"size"`
-	Walls      bool `json:"walls"`
-	GreatWalls bool `json:"greatWalls"`
+	Size           int  `json:"size"`
+	Walls          bool `json:"walls"`
+	GreatWalls     bool `json:"greatWalls"`
+	CoastalDefence bool `json:"coastalDefence"`
 }
 
 type DefenceStats struct {
@@ -81,4 +98,31 @@ type UnitDetails struct {
 	Submarine        bool
 	BadCityDefender  bool
 	OnlyNativeAttack bool
+}
+
+type DefenderCity struct {
+	Size              int  `json:""`
+	HasWalls          bool `json:""`
+	HasCoastalDefence bool `json:""`
+	HasSAM            bool `json:""`
+	HasSDI            bool `json:""`
+}
+
+type DefenderTerrain struct {
+	Type     string `json:""`
+	HasRiver bool   `json:"hasRiver"`
+}
+
+type DefenderUnit struct {
+	Name         string `json:"name"`
+	Vetlevel     int    `json:"vetLevel"`
+	HP           int    `json:"hp"`
+	HasRiver     bool   `json:"hasRiver"`
+	HasCity      bool   `json:"hasCity"`
+	HasFortress  bool   `json:"hasFortress"`
+	IsFortified  bool   `json:"isFortified"`
+	HasGreatWall bool   `json:""`
+
+	City    DefenderCity    `json:"city"`
+	Terrain DefenderTerrain `json:"terrain"`
 }
