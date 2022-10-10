@@ -4,7 +4,7 @@ package stats
 // USE THE SCRIPT parse_terrain_ruleset.js TO RE-GENERATE IF NEEDED
 
 import (
-	"github.com/xarxziux/freecocoa/src/models"
+	"freecocoa/src/models"
 )
 
 // TerrainStats lists all units combat stats as extracted from units.ruleset.

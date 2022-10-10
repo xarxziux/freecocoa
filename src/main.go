@@ -3,13 +3,16 @@ package main
 import (
 	"log"
 
+	"freecocoa/src/models"
+	"freecocoa/src/utils"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-type unit struct {
+/*type unit struct {
 	Unit string `json:"unit"`
-}
+        }*/
 
 func main() {
 	app := fiber.New()
@@ -23,7 +26,7 @@ func main() {
 		return c.SendString("Only JSON allowed!")
 	})
 
-	baseUnit := unit{}
+	baseUnit := models.DefenderUnit{}
 
 	app.Post("/api/v0.0.1/getdefence", func(c *fiber.Ctx) error {
 		err := c.BodyParser(&baseUnit)
@@ -32,8 +35,12 @@ func main() {
 			return c.SendString(":(")
 		}
 
-		return c.JSON(baseUnit)
-		//return c
+		fullUnit, err := utils.ConvertDefender(baseUnit)
+		if err != nil {
+			return c.JSON(err.Error())
+		}
+
+		return c.JSON(fullUnit)
 	})
 
 	log.Fatal(app.Listen(":7123"))
