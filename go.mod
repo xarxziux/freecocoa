@@ -1,8 +1,11 @@
-module github.com/xarxziux/freecocoa
+module freecocoa
 
-go 1.17
+go 1.19
 
-require github.com/gofiber/fiber/v2 v2.34.0
+require (
+	github.com/gofiber/fiber/v2 v2.34.0
+	github.com/xarxziux/freecocoa v0.0.0-20220705003147-0a573463a5c7
+)
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect

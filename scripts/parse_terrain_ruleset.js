@@ -20,7 +20,7 @@ const main = () => {
 // USE THE SCRIPT parse_terrain_ruleset.js TO RE-GENERATE IF NEEDED
 
 import (
-\t"github.com/xarxziux/freecocoa/src/models"
+\t"freecocoa/src/models"
 )
 
 // TerrainStats lists all units combat stats as extracted from units.ruleset.
