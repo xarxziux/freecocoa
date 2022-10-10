@@ -7,6 +7,7 @@ const flagsRX = /^flags *=/
 const moreFlagsRX = /^ *"/
 const unitRX = /^\[\??unit_(?<unit>\w*)\]/
 const nameRX = /^name *= *_\("(?:\?unit:)?(?<name>[\w| |.]*)"\)/
+const classnameRX = /^name *= *_\("(?:\?unitclass:)?(?<classname>[\w| |.]*)"\)/
 const classRX = /^class *= "(?<class>[\w| ]*)"/
 const attackRX = /^attack *= (?<attack>\d*)/
 const defenseRX = /^defense *= (?<defense>\d*)/
@@ -23,7 +24,7 @@ const main = () => {
 // USE THE SCRIPT parse_units_ruleset.js TO RE-GENERATE IF NEEDED
 
 import (
-\t"github.com/xarxziux/freecocoa/src/models"
+\t"freecocoa/src/models"
 )
 
 // UnitClassStats lists all unit classes and combat-relevant flags as extracted
@@ -33,7 +34,7 @@ var UnitClassStats = map[string]models.UnitClass{`)
   while (unitRX.exec(line) === null) {
     const unitClass = unitClassRX.exec(line)
     if (unitClass !== null) {
-      console.log(`\t"${unitClass.groups.unitClass}": {`)
+      console.log(`\t"${convertClassNames(unitClass.groups.unitClass)}": {`)
       readClassSection(lines)
     }
 
@@ -63,9 +64,9 @@ const readClassSection = (lines) => {
   let line = lines.next()
 
   while (true) {
-    const name = nameRX.exec(line)
-    if (name !== null) {
-      console.log(`\t\tName: "${name.groups.name}",`)
+    const classname = classnameRX.exec(line)
+    if (classname !== null) {
+      console.log(`\t\tName: models.${classname.groups.classname.replace(/ /g, '')},`)
     }
 
     const flags = flagsRX.exec(line)
@@ -90,7 +91,7 @@ const readUnitsSection = (lines) => {
 
     const unitClassName = classRX.exec(line)
     if (unitClassName !== null) {
-      console.log(`\t\tClass: UnitClassStats["${unitClassName.groups.class.replace(/ /g, '')}"],`)
+      console.log(`\t\tClass: UnitClassStats["${unitClassName.groups.class.replace(/ /g, '').toLowerCase()}"],`)
     }
 
     const attack = attackRX.exec(line)
@@ -196,6 +197,15 @@ const readUnitFlags = (lines, line) => {
   if (line.includes('OnlyNativeAttack')) {
     console.log('\t\tOnlyNativeAttack: true,')
   }
+}
+
+// Fix inconsistencies in class names
+const convertClassNames = (className) => {
+    if (className == 'land_small') return 'smallland'
+    if (className == 'land_big') return 'bigland'
+    if (className == 'land_siege') return 'bigsiege'
+    if (className == 'heli') return 'helicopter'
+    return className
 }
 
 main()

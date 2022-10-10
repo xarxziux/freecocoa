@@ -4,42 +4,53 @@ package stats
 // USE THE SCRIPT parse_units_ruleset.js TO RE-GENERATE IF NEEDED
 
 import (
-	"github.com/xarxziux/freecocoa/src/models"
+	"freecocoa/src/models"
 )
 
 // UnitClassStats lists all unit classes and combat-relevant flags as extracted
 // from units.ruleset.
 var UnitClassStats = map[string]models.UnitClass{
 	"missile": {
+		Name:        models.Missile,
 		Missile:     true,
 		Unreachable: true,
 	},
 	"land": {
+		Name:           models.Land,
 		TerrainDefense: true,
 		CanFortify:     true,
 	},
-	"land_small": {
+	"smallland": {
+		Name:           models.SmallLand,
 		TerrainDefense: true,
 		CanFortify:     true,
 	},
-	"land_big": {
+	"bigland": {
+		Name:       models.BigLand,
 		CanFortify: true,
 	},
-	"land_siege": {
+	"bigsiege": {
+		Name:            models.BigSiege,
 		CanFortify:      true,
 		AttackNonNative: true,
 	},
 	"merchant": {
+		Name:           models.Merchant,
 		TerrainDefense: true,
 	},
 	"sea": {
+		Name:            models.Sea,
 		AttackNonNative: true,
 	},
-	"trireme": {},
-	"heli": {
+	"trireme": {
+		Name: models.Trireme,
+	},
+	"helicopter": {
+		Name:        models.Helicopter,
 		Unreachable: true,
 	},
 	"air": {
+		Name:        models.Air,
 		Unreachable: true,
 	},
 }
@@ -49,7 +60,7 @@ var UnitClassStats = map[string]models.UnitClass{
 var UnitStats = map[string]models.UnitDetails{
 	"settlers": {
 		Name:    "Settlers",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 1,
 		HP:      20,
@@ -57,7 +68,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"migrants": {
 		Name:    "Migrants",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 1,
 		HP:      20,
@@ -65,7 +76,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"immigrants": {
 		Name:    "Immigrants",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 1,
 		HP:      20,
@@ -73,7 +84,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"tribal_worker": {
 		Name:    "Tribal Workers",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 1,
 		HP:      10,
@@ -81,7 +92,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"worker": {
 		Name:    "Workers",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 1,
 		HP:      10,
@@ -89,7 +100,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"engineers": {
 		Name:    "Engineers",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 2,
 		HP:      20,
@@ -97,7 +108,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"warriors": {
 		Name:    "Warriors",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  1,
 		Defense: 1,
 		HP:      10,
@@ -105,7 +116,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"phalanx": {
 		Name:    "Phalanx",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  1,
 		Defense: 2,
 		HP:      10,
@@ -113,7 +124,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"archers": {
 		Name:    "Archers",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  3,
 		Defense: 1,
 		HP:      10,
@@ -121,7 +132,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"legion": {
 		Name:    "Swordsmen",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  4,
 		Defense: 2,
 		HP:      10,
@@ -129,7 +140,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"pikemen": {
 		Name:    "Pikemen",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  2,
 		Defense: 3,
 		HP:      10,
@@ -137,7 +148,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"musketeers": {
 		Name:    "Musketeers",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  3,
 		Defense: 3,
 		HP:      20,
@@ -145,7 +156,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"riflemen": {
 		Name:    "Riflemen",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  5,
 		Defense: 4,
 		HP:      20,
@@ -153,7 +164,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"infantry": {
 		Name:    "Infantry",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  5,
 		Defense: 6,
 		HP:      20,
@@ -161,7 +172,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"alpine_troops": {
 		Name:    "Alpine Troops",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  7,
 		Defense: 4,
 		HP:      20,
@@ -169,7 +180,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"partisan": {
 		Name:    "Partisan",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  4,
 		Defense: 5,
 		HP:      20,
@@ -177,7 +188,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"fanatics": {
 		Name:    "Fanatics",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  3,
 		Defense: 4,
 		HP:      20,
@@ -185,7 +196,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"marines": {
 		Name:    "Marines",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  8,
 		Defense: 5,
 		HP:      20,
@@ -193,7 +204,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"paratroopers": {
 		Name:    "Paratroopers",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  6,
 		Defense: 4,
 		HP:      20,
@@ -201,7 +212,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"mech_inf": {
 		Name:    "Mech. Inf.",
-		Class:   UnitClassStats["BigLand"],
+		Class:   UnitClassStats["bigland"],
 		Attack:  6,
 		Defense: 6,
 		HP:      30,
@@ -209,7 +220,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"horsemen": {
 		Name:    "Horsemen",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  2,
 		Defense: 1,
 		HP:      10,
@@ -218,7 +229,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"chariot": {
 		Name:    "Chariot",
-		Class:   UnitClassStats["BigLand"],
+		Class:   UnitClassStats["bigland"],
 		Attack:  4,
 		Defense: 1,
 		HP:      10,
@@ -227,7 +238,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"elephants": {
 		Name:    "Elephants",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  3,
 		Defense: 2,
 		HP:      10,
@@ -236,7 +247,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"crusaders": {
 		Name:    "Crusaders",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  3,
 		Defense: 2,
 		HP:      15,
@@ -245,7 +256,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"knights": {
 		Name:    "Knights",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  6,
 		Defense: 3,
 		HP:      10,
@@ -254,7 +265,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"dragoons": {
 		Name:    "Dragoons",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  5,
 		Defense: 2,
 		HP:      20,
@@ -263,7 +274,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"cavalry": {
 		Name:    "Cavalry",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  8,
 		Defense: 3,
 		HP:      20,
@@ -272,7 +283,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"armor": {
 		Name:    "Armor",
-		Class:   UnitClassStats["BigLand"],
+		Class:   UnitClassStats["bigland"],
 		Attack:  10,
 		Defense: 5,
 		HP:      30,
@@ -280,7 +291,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"catapult": {
 		Name:       "Catapult",
-		Class:      UnitClassStats["BigSiege"],
+		Class:      UnitClassStats["bigsiege"],
 		Attack:     5,
 		Defense:    1,
 		HP:         10,
@@ -289,7 +300,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"cannon": {
 		Name:       "Cannon",
-		Class:      UnitClassStats["BigSiege"],
+		Class:      UnitClassStats["bigsiege"],
 		Attack:     8,
 		Defense:    1,
 		HP:         20,
@@ -298,7 +309,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"artillery": {
 		Name:       "Artillery",
-		Class:      UnitClassStats["BigSiege"],
+		Class:      UnitClassStats["bigsiege"],
 		Attack:     10,
 		Defense:    2,
 		HP:         20,
@@ -307,7 +318,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"howitzer": {
 		Name:       "Howitzer",
-		Class:      UnitClassStats["BigSiege"],
+		Class:      UnitClassStats["bigsiege"],
 		Attack:     12,
 		Defense:    2,
 		HP:         30,
@@ -316,7 +327,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"fighter": {
 		Name:        "Fighter",
-		Class:       UnitClassStats["Air"],
+		Class:       UnitClassStats["air"],
 		Attack:      4,
 		Defense:     4,
 		HP:          20,
@@ -325,7 +336,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"bomber": {
 		Name:        "Bomber",
-		Class:       UnitClassStats["Air"],
+		Class:       UnitClassStats["air"],
 		Attack:      6,
 		Defense:     1,
 		HP:          30,
@@ -334,7 +345,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"helicopter": {
 		Name:        "Helicopter",
-		Class:       UnitClassStats["Helicopter"],
+		Class:       UnitClassStats["helicopter"],
 		Attack:      5,
 		Defense:     3,
 		HP:          30,
@@ -343,7 +354,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"stealth_fighter": {
 		Name:        "Stealth Fighter",
-		Class:       UnitClassStats["Air"],
+		Class:       UnitClassStats["air"],
 		Attack:      8,
 		Defense:     7,
 		HP:          20,
@@ -352,7 +363,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"stealth_bomber": {
 		Name:        "Stealth Bomber",
-		Class:       UnitClassStats["Air"],
+		Class:       UnitClassStats["air"],
 		Attack:      9,
 		Defense:     3,
 		HP:          30,
@@ -361,7 +372,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"trireme": {
 		Name:            "Trireme",
-		Class:           UnitClassStats["Trireme"],
+		Class:           UnitClassStats["trireme"],
 		Attack:          1,
 		Defense:         1,
 		HP:              10,
@@ -370,7 +381,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"barge": {
 		Name:            "Barge",
-		Class:           UnitClassStats["Trireme"],
+		Class:           UnitClassStats["trireme"],
 		Attack:          0,
 		Defense:         2,
 		HP:              20,
@@ -379,7 +390,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"longboat": {
 		Name:            "Longboat",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          1,
 		Defense:         2,
 		HP:              4,
@@ -387,7 +398,7 @@ var UnitStats = map[string]models.UnitDetails{
 		BadCityDefender: true,
 	},
 	"square_rigged_caravel": {
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          3,
 		Defense:         2,
 		HP:              8,
@@ -396,7 +407,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"caravel": {
 		Name:            "Caravel",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          1,
 		Defense:         2,
 		HP:              10,
@@ -405,7 +416,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"galleon": {
 		Name:            "Galleon",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          0,
 		Defense:         2,
 		HP:              20,
@@ -414,7 +425,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"frigate": {
 		Name:            "Frigate",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          4,
 		Defense:         3,
 		HP:              20,
@@ -423,7 +434,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"flagship_frigate": {
 		Name:            "Flagship Frigate",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          5,
 		Defense:         3,
 		HP:              22,
@@ -432,7 +443,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"ironclad": {
 		Name:            "Ironclad",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          5,
 		Defense:         6,
 		HP:              20,
@@ -441,7 +452,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"destroyer": {
 		Name:            "Destroyer",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          4,
 		Defense:         4,
 		HP:              30,
@@ -450,7 +461,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"cruiser": {
 		Name:            "Cruiser",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          4,
 		Defense:         8,
 		HP:              30,
@@ -459,7 +470,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"aegis_cruiser": {
 		Name:            "AEGIS Cruiser",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          8,
 		Defense:         8,
 		HP:              30,
@@ -468,7 +479,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"battleship": {
 		Name:            "Battleship",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          14,
 		Defense:         14,
 		HP:              30,
@@ -477,7 +488,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"submarine": {
 		Name:            "Submarine",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          12,
 		Defense:         4,
 		HP:              20,
@@ -487,7 +498,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"nuclear_submarine": {
 		Name:            "Nuclear Submarine",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          12,
 		Defense:         4,
 		HP:              20,
@@ -497,7 +508,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"carrier": {
 		Name:            "Carrier",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          0,
 		Defense:         10,
 		HP:              40,
@@ -506,7 +517,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"transport": {
 		Name:            "Transport",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          0,
 		Defense:         3,
 		HP:              30,
@@ -515,7 +526,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"missile": {
 		Name:        "Missile",
-		Class:       UnitClassStats["Missile"],
+		Class:       UnitClassStats["missile"],
 		Attack:      15,
 		Defense:     0,
 		HP:          2,
@@ -524,7 +535,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"cruise_missile": {
 		Name:        "Cruise Missile",
-		Class:       UnitClassStats["Missile"],
+		Class:       UnitClassStats["missile"],
 		Attack:      10,
 		Defense:     0,
 		HP:          5,
@@ -534,7 +545,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"intercontinental_missile": {
 		Name:        "Intercontinental Missile",
-		Class:       UnitClassStats["Missile"],
+		Class:       UnitClassStats["missile"],
 		Attack:      25,
 		Defense:     0,
 		HP:          5,
@@ -543,7 +554,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"nuclear_bomb": {
 		Name:    "Nuclear Bomb",
-		Class:   UnitClassStats["Missile"],
+		Class:   UnitClassStats["missile"],
 		Attack:  99,
 		Defense: 0,
 		HP:      10,
@@ -551,7 +562,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"nuclear": {
 		Name:        "Nuclear",
-		Class:       UnitClassStats["Missile"],
+		Class:       UnitClassStats["missile"],
 		Attack:      99,
 		Defense:     0,
 		HP:          10,
@@ -560,7 +571,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"diplomat": {
 		Name:    "Diplomat",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 0,
 		HP:      10,
@@ -568,7 +579,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"spy": {
 		Name:    "Spy",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 0,
 		HP:      10,
@@ -576,7 +587,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"operative": {
 		Name:    "Operative",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 0,
 		HP:      10,
@@ -584,7 +595,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"scribe": {
 		Name:    "Scribe",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 0,
 		HP:      10,
@@ -592,7 +603,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"scholar": {
 		Name:    "Scholar",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 0,
 		HP:      10,
@@ -600,7 +611,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"caravan": {
 		Name:    "Caravan",
-		Class:   UnitClassStats["Merchant"],
+		Class:   UnitClassStats["merchant"],
 		Attack:  0,
 		Defense: 1,
 		HP:      10,
@@ -608,7 +619,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"freight": {
 		Name:    "Freight",
-		Class:   UnitClassStats["Merchant"],
+		Class:   UnitClassStats["merchant"],
 		Attack:  0,
 		Defense: 2,
 		HP:      20,
@@ -616,7 +627,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"explorer": {
 		Name:    "Explorer",
-		Class:   UnitClassStats["SmallLand"],
+		Class:   UnitClassStats["smallland"],
 		Attack:  0,
 		Defense: 1,
 		HP:      7,
@@ -624,7 +635,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"leader": {
 		Name:    "Leader",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  0,
 		Defense: 2,
 		HP:      20,
@@ -632,7 +643,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"barbarian_leader": {
 		Name:    "Barbarian Leader",
-		Class:   UnitClassStats["Land"],
+		Class:   UnitClassStats["land"],
 		Attack:  0,
 		Defense: 0,
 		HP:      10,
@@ -640,7 +651,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"awacs": {
 		Name:    "AWACS",
-		Class:   UnitClassStats["Air"],
+		Class:   UnitClassStats["air"],
 		Attack:  0,
 		Defense: 1,
 		HP:      20,
@@ -648,7 +659,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"fusion_fighter": {
 		Name:        "Fusion Fighter",
-		Class:       UnitClassStats["Air"],
+		Class:       UnitClassStats["air"],
 		Attack:      8,
 		Defense:     7,
 		HP:          20,
@@ -657,7 +668,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"fusion_bomber": {
 		Name:        "Fusion Bomber",
-		Class:       UnitClassStats["Air"],
+		Class:       UnitClassStats["air"],
 		Attack:      9,
 		Defense:     3,
 		HP:          30,
@@ -666,7 +677,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"fusion_battleship": {
 		Name:            "Fusion Battleship",
-		Class:           UnitClassStats["Sea"],
+		Class:           UnitClassStats["sea"],
 		Attack:          24,
 		Defense:         12,
 		HP:              30,
@@ -675,7 +686,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"fusion_armor": {
 		Name:    "Fusion Armor",
-		Class:   UnitClassStats["BigLand"],
+		Class:   UnitClassStats["bigland"],
 		Attack:  10,
 		Defense: 5,
 		HP:      30,
@@ -683,7 +694,7 @@ var UnitStats = map[string]models.UnitDetails{
 	},
 	"cargo_aircraft": {
 		Name:    "Cargo Aircraft",
-		Class:   UnitClassStats["Air"],
+		Class:   UnitClassStats["air"],
 		Attack:  0,
 		Defense: 3,
 		HP:      30,
