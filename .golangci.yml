@@ -1,0 +1,85 @@
+# Config file for golangci-lint
+#
+# options for analysis running
+run:
+  # default concurrency is a available CPU number
+  concurrency: 4
+
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  deadline: 5m
+
+  # exit code when at least one issue was found, default is 1
+  issues-exit-code: 1
+
+  # include test files or not, default is true
+  tests: true
+
+# output configuration options
+output:
+  # colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number"
+  format: colored-line-number
+
+  # print lines of code with issue, default is true
+  print-issued-lines: true
+
+  # print linter name in the end of issue text, default is true
+  print-linter-name: true
+
+# all available settings of specific linters
+linters-settings:
+  dupl:
+    # tokens count to trigger issue, 150 by default
+    threshold: 200
+  nestif:
+    # minimal complexity of if statements to report, 5 by default
+    min-complexity: 7
+
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - stylecheck
+    - unconvert
+    - dupl
+    - goconst
+    - gocyclo
+    - gofmt
+    - goimports
+    - misspell
+    - unparam
+    - dogsled
+    - prealloc
+    - exportloopref
+    - gocritic
+    - whitespace
+    - ineffassign
+    - nestif
+    - staticcheck
+    - typecheck
+    - unused
+    - gosimple
+    - errcheck
+    - govet
+    - gosec
+
+issues:
+  # Maximum issues count per one linter. Set to 0 to disable. Default is 50.
+  max-per-linter: 0
+
+  # Maximum count of issues with the same text. Set to 0 to disable. Default is 3.
+  max-same-issues: 0
+
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - goconst
+        - prealloc
+    - linters:
+      - staticcheck
+      text: "tls.VersionSSL30" # This is used a lot. Unsure if intentional or not
