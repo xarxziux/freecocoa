@@ -46,7 +46,7 @@ const (
 	OceanicClass
 )
 
-var VeteranLevels = [10]float32{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
+var VeteranLevels = [10]float32{1.0, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
 
 type TerrainType struct {
 	Name         string
@@ -76,7 +76,8 @@ type DefenceStats struct {
 }
 
 type UnitClass struct {
-	Name             UnitClassName
+	NameEnum         UnitClassName `json:"-"`
+	Name             string
 	TerrainDefense   bool
 	Missile          bool
 	Unreachable      bool
@@ -88,8 +89,8 @@ type UnitClass struct {
 type UnitDetails struct {
 	Name             string
 	Class            UnitClass
-	Attack           int
-	Defense          int
+	Attack           float32
+	Defense          float32
 	HP               int
 	FP               int
 	CityBuster       bool
@@ -115,7 +116,7 @@ type DefenderTerrain struct {
 
 type DefenderUnit struct {
 	Name         string `json:"name"`
-	Vetlevel     int    `json:"vetLevel"`
+	VetLevel     int    `json:"vetLevel"`
 	HP           int    `json:"hp"`
 	HasRiver     bool   `json:"hasRiver"`
 	HasCity      bool   `json:"hasCity"`

@@ -26,18 +26,17 @@ func main() {
 		return c.SendString("Only JSON allowed!")
 	})
 
-	baseUnit := models.DefenderUnit{}
-
-	app.Post("/api/v0.0.1/getdefence", func(c *fiber.Ctx) error {
+	app.Post("/api/v0.0.1/getstats", func(c *fiber.Ctx) error {
+		baseUnit := models.DefenderUnit{}
 		err := c.BodyParser(&baseUnit)
 
 		if err != nil {
-			return c.SendString(":(")
+			return err
 		}
 
 		fullUnit, err := utils.ConvertDefender(baseUnit)
 		if err != nil {
-			return c.JSON(err.Error())
+			return err
 		}
 
 		return c.JSON(fullUnit)

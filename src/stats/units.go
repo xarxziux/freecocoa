@@ -11,46 +11,46 @@ import (
 // from units.ruleset.
 var UnitClassStats = map[string]models.UnitClass{
 	"missile": {
-		Name:        models.Missile,
+		NameEnum:    models.Missile,
 		Missile:     true,
 		Unreachable: true,
 	},
 	"land": {
-		Name:           models.Land,
+		NameEnum:       models.Land,
 		TerrainDefense: true,
 		CanFortify:     true,
 	},
 	"smallland": {
-		Name:           models.SmallLand,
+		NameEnum:       models.SmallLand,
 		TerrainDefense: true,
 		CanFortify:     true,
 	},
 	"bigland": {
-		Name:       models.BigLand,
+		NameEnum:   models.BigLand,
 		CanFortify: true,
 	},
 	"bigsiege": {
-		Name:            models.BigSiege,
+		NameEnum:        models.BigSiege,
 		CanFortify:      true,
 		AttackNonNative: true,
 	},
 	"merchant": {
-		Name:           models.Merchant,
+		NameEnum:       models.Merchant,
 		TerrainDefense: true,
 	},
 	"sea": {
-		Name:            models.Sea,
+		NameEnum:        models.Sea,
 		AttackNonNative: true,
 	},
 	"trireme": {
-		Name: models.Trireme,
+		NameEnum: models.Trireme,
 	},
 	"helicopter": {
-		Name:        models.Helicopter,
+		NameEnum:    models.Helicopter,
 		Unreachable: true,
 	},
 	"air": {
-		Name:        models.Air,
+		NameEnum:    models.Air,
 		Unreachable: true,
 	},
 }

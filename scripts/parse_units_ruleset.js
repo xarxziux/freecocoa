@@ -66,7 +66,7 @@ const readClassSection = (lines) => {
   while (true) {
     const classname = classnameRX.exec(line)
     if (classname !== null) {
-      console.log(`\t\tName: models.${classname.groups.classname.replace(/ /g, '')},`)
+      console.log(`\t\tNameEnum: models.${classname.groups.classname.replace(/ /g, '')},`)
     }
 
     const flags = flagsRX.exec(line)
