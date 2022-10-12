@@ -127,3 +127,14 @@ type DefenderUnit struct {
 	City    DefenderCity    `json:"city"`
 	Terrain DefenderTerrain `json:"terrain"`
 }
+
+type AttackerUnit struct {
+	Name     string `json:"name"`
+	VetLevel int    `json:"vetLevel"`
+	HP       int    `json:"hp"`
+}
+
+type AttackerVDefender struct {
+	Attacker AttackerUnit `json:"attacker"`
+	Defender DefenderUnit `json:"defender"`
+}
