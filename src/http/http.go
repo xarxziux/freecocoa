@@ -18,7 +18,6 @@ func StartServer() {
 		return c.SendString("Only JSON allowed!")
 	})
 
-	app.Post("/api/v1/getstats", getStats)
 	app.Post("/api/v1/attack", attack)
 
 	log.Fatal(app.Listen(":7123"))

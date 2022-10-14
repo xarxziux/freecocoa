@@ -96,12 +96,12 @@ const readUnitsSection = (lines) => {
 
     const attack = attackRX.exec(line)
     if (attack !== null) {
-      console.log(`\t\tAttack: ${attack.groups.attack},`)
+      console.log(`\t\tAP: ${attack.groups.attack},`)
     }
 
     const defense = defenseRX.exec(line)
     if (defense !== null) {
-      console.log(`\t\tDefense: ${defense.groups.defense},`)
+      console.log(`\t\tDP: ${defense.groups.defense},`)
     }
 
     const hp = hpRX.exec(line)

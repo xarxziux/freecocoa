@@ -4,44 +4,58 @@ import (
 	"errors"
 	"fmt"
 
+	"freecocoa/src/core"
 	"freecocoa/src/models"
 	"freecocoa/src/stats"
 )
 
-func ConvertDefender(data models.DefenderUnit) (*models.UnitDetails, error) {
-	answer := models.UnitDetails{}
+func GetStats(avd models.AttackerVDefender) (*models.AllStats, error) {
+	answer := models.AllStats{}
 
-	unit, ok := stats.UnitStats[data.Name]
+	attUnit, ok := stats.UnitStats[avd.Attacker.Name]
 	if !ok {
-		return nil, fmt.Errorf("unit \"%s\" not found", data.Name)
+		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
 	}
 
-	if data.VetLevel < 0 || data.VetLevel > 9 {
+	defUnit, ok := stats.UnitStats[avd.Defender.Name]
+	if !ok {
+		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
+	}
+
+	if avd.Attacker.VetLevel > 9 || avd.Defender.VetLevel > 9 {
 		return nil, errors.New("veteran level must be an integer between 0 and 9")
 	}
 
-	if data.HP < 0 || data.HP > unit.HP {
-		return nil, fmt.Errorf("hp must be an integer between 1 and %d (0 or missing defaults to %d)", unit.HP, unit.HP)
+	if avd.Attacker.HP > attUnit.HP {
+		return nil, fmt.Errorf("attacker HP must be an integer between 1 and %d (0 or missing defaults to %d)", attUnit.HP, attUnit.HP)
 	}
 
-	answer.Name = unit.Name
-	answer.Attack = unit.Attack * models.VeteranLevels[data.VetLevel]
-	answer.Defense = unit.Defense * models.VeteranLevels[data.VetLevel]
-	answer.Class = unit.Class
-	answer.Class.Name = unit.Class.NameEnum.ToString()
-	answer.FP = unit.FP
-	answer.CityBuster = unit.CityBuster
-	answer.AirAttacker = unit.AirAttacker
-	answer.Horse = unit.Horse
-	answer.Submarine = unit.Submarine
-	answer.BadCityDefender = unit.BadCityDefender
-	answer.OnlyNativeAttack = unit.OnlyNativeAttack
+	if avd.Defender.HP > defUnit.HP {
+		return nil, fmt.Errorf("defender HP must be an integer between 1 and %d (0 or missing defaults to %d)", defUnit.HP, defUnit.HP)
+	}
 
-	if data.HP == 0 {
-		answer.HP = unit.HP
+	citySize := core.GetCitySize(avd.Defender.City.Size)
+
+	if avd.Defender.HasCity && citySize == models.NoCity {
+		return nil, fmt.Errorf("city cannot be of size 0")
+	}
+
+	if avd.Attacker.HP == 0 {
+		answer.Attacker.HP = attUnit.HP
 	} else {
-		answer.HP = data.HP
+		answer.Attacker.HP = avd.Attacker.HP
 	}
+
+	if avd.Defender.HP == 0 {
+		answer.Defender.HP = defUnit.HP
+	} else {
+		answer.Defender.HP = avd.Defender.HP
+	}
+
+	answer.Attacker.AP = attUnit.AP
+	answer.Defender.DP = defUnit.DP
+	answer.Attacker.FP = attUnit.FP
+	answer.Defender.FP = defUnit.FP
 
 	return &answer, nil
 }

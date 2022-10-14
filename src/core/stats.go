@@ -29,7 +29,7 @@ import (
 	return models.NoTerrain
 }*/
 
-func GetCitySize(size int) models.CityType {
+func GetCitySize(size uint8) models.CityType {
 	if size == 0 {
 		return models.NoCity
 	}
@@ -45,7 +45,7 @@ func GetCityLandBonus(city models.CityStats) float32 {
 	citySize := GetCitySize(city.Size)
 
 	if citySize == models.NoCity {
-		return 1
+		return 1.0
 	}
 
 	if citySize == models.Town && !city.Walls {

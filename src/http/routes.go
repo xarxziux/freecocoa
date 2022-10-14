@@ -7,22 +7,17 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func getStats(c *fiber.Ctx) error {
-	baseUnit := models.DefenderUnit{}
-	err := c.BodyParser(&baseUnit)
-
-	if err != nil {
-		return err
-	}
-
-	fullUnit, err := utils.ConvertDefender(baseUnit)
-	if err != nil {
-		return err
-	}
-
-	return c.JSON(fullUnit)
-}
-
 func attack(c *fiber.Ctx) error {
-	return c.JSON("unimplemented")
+	avd := models.AttackerVDefender{}
+	err := c.BodyParser(&avd)
+	if err != nil {
+		return err
+	}
+
+	stats, err := utils.GetStats(avd)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(stats)
 }
