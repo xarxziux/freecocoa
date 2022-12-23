@@ -1,8 +1,8 @@
 package http
 
 import (
+	"freecocoa/src/core"
 	"freecocoa/src/models"
-	"freecocoa/src/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -14,10 +14,15 @@ func attack(c *fiber.Ctx) error {
 		return err
 	}
 
-	stats, err := utils.GetStats(avd)
+	baseStats, err := validateInput(avd)
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(stats)
+	finalStats, err := core.GetStats(*baseStats)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(finalStats)
 }

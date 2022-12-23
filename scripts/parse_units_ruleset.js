@@ -18,7 +18,7 @@ const main = () => {
   const lines = new NReadLines('units.ruleset')
   let line = lines.next()
 
-  console.log(`package stats
+  console.log(`package rulesets
 
 // AUTO-GENERATED FILE - DO NOT EDIT
 // USE THE SCRIPT parse_units_ruleset.js TO RE-GENERATE IF NEEDED

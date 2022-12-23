@@ -1,4 +1,4 @@
-package stats
+package rulesets
 
 // AUTO-GENERATED FILE - DO NOT EDIT
 // USE THE SCRIPT parse_terrain_ruleset.js TO RE-GENERATE IF NEEDED

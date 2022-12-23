@@ -46,8 +46,6 @@ const (
 	OceanicClass
 )
 
-var VeteranLevels = [10]float32{1.0, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
-
 type TerrainType struct {
 	Name         string
 	Class        TerrainClass
@@ -77,7 +75,7 @@ type DefenceStats struct {
 	FP uint8
 }
 
-type AllStats struct {
+type FinalStats struct {
 	Attacker AttackStats
 	Defender DefenceStats
 }
@@ -106,14 +104,22 @@ type UnitDetails struct {
 	Submarine        bool
 	BadCityDefender  bool
 	OnlyNativeAttack bool
+	CantFortify      bool
+}
+
+type PairDetails struct {
+	Attacker UnitDetails
+	Defender UnitDetails
 }
 
 type DefenderCity struct {
 	Size              uint8 `json:"size"`
 	HasWalls          bool  `json:"hasWalls"`
+	HasGreatWall      bool  `json:"hasGreatWall"`
 	HasCoastalDefence bool  `json:"hasCoastalDefence"`
 	HasSAM            bool  `json:"hasSAM"`
-	HasSDI            bool  `json:"hasSDI"`
+	SDILevel          uint8 `json:"sdiLevel"`
+	IsCapital         bool  `json:"isCapital"`
 }
 
 type DefenderTerrain struct {
@@ -144,4 +150,10 @@ type AttackerUnit struct {
 type AttackerVDefender struct {
 	Attacker AttackerUnit `json:"attacker"`
 	Defender DefenderUnit `json:"defender"`
+}
+
+type BaseStats struct {
+	Input   AttackerVDefender
+	Details PairDetails
+	Terrain TerrainType
 }
