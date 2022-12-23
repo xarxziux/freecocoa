@@ -15,10 +15,17 @@ const hpRX = /^hitpoints *= (?<hp>\d*)/
 const fpRX = /^firepower *= (?<fp>\d*)/
 
 const main = () => {
-  const lines = new NReadLines('units.ruleset')
+  const args = process.argv
+
+  if (args.length !== 4) {
+    console.log(`Usage: ${args[1]} <filename> <ruleset>`)
+    return
+  }
+
+  const lines = new NReadLines(args[2])
   let line = lines.next()
 
-  console.log(`package rulesets
+  console.log(`package ${args[3]}
 
 // AUTO-GENERATED FILE - DO NOT EDIT
 // USE THE SCRIPT parse_units_ruleset.js TO RE-GENERATE IF NEEDED
@@ -201,11 +208,11 @@ const readUnitFlags = (lines, line) => {
 
 // Fix inconsistencies in class names
 const convertClassNames = (className) => {
-    if (className == 'land_small') return 'smallland'
-    if (className == 'land_big') return 'bigland'
-    if (className == 'land_siege') return 'bigsiege'
-    if (className == 'heli') return 'helicopter'
-    return className
+  if (className === 'land_small') return 'smallland'
+  if (className === 'land_big') return 'bigland'
+  if (className === 'land_siege') return 'bigsiege'
+  if (className === 'heli') return 'helicopter'
+  return className
 }
 
 main()

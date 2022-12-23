@@ -5,26 +5,49 @@ import (
 	"fmt"
 
 	"freecocoa/src/models"
-	"freecocoa/src/rulesets"
+	"freecocoa/src/rulesets/lt75"
+	"freecocoa/src/rulesets/ltt"
+	"freecocoa/src/rulesets/ltx"
 )
 
-func validateInput(avd models.AttackerVDefender) (*models.BaseStats, error) {
-	attUnit, ok := rulesets.UnitStats[avd.Attacker.Name]
-	if !ok {
-		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
-	}
-
-	defUnit, ok := rulesets.UnitStats[avd.Defender.Name]
-	if !ok {
-		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
-	}
+func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseStats, error) {
+	var attUnit models.UnitDetails
+	var defUnit models.UnitDetails
+	var terrain models.TerrainType
+	var attOK bool
+	var defOK bool
+	var terrOK bool
 
 	if avd.Defender.Terrain.Type == "" {
 		return nil, fmt.Errorf("no terrain details found")
 	}
 
-	terrain, ok := rulesets.TerrainStats[avd.Defender.Terrain.Type]
-	if !ok {
+	switch ruleset {
+	case "ltt":
+		attUnit, attOK = ltt.UnitStats[avd.Attacker.Name]
+		defUnit, defOK = ltt.UnitStats[avd.Defender.Name]
+		terrain, terrOK = ltt.TerrainStats[avd.Defender.Terrain.Type]
+	case "ltx":
+		attUnit, attOK = ltx.UnitStats[avd.Attacker.Name]
+		defUnit, defOK = ltx.UnitStats[avd.Defender.Name]
+		terrain, terrOK = ltx.TerrainStats[avd.Defender.Terrain.Type]
+	case "lt75":
+		attUnit, attOK = lt75.UnitStats[avd.Attacker.Name]
+		defUnit, defOK = lt75.UnitStats[avd.Defender.Name]
+		terrain, terrOK = lt75.TerrainStats[avd.Defender.Terrain.Type]
+	default:
+		panic("validation failure: bad ruleset")
+	}
+
+	if !attOK {
+		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
+	}
+
+	if !defOK {
+		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
+	}
+
+	if !terrOK {
 		return nil, fmt.Errorf("unrecognised terrain type \"%s\"", avd.Defender.Terrain.Type)
 	}
 

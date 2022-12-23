@@ -11,10 +11,17 @@ const moreFlagsRX = /^ *"/
 const helpTextRX = /helptext/
 
 const main = () => {
-  const lines = new NReadLines('terrain.ruleset')
+  const args = process.argv
+
+  if (args.length !== 4) {
+    console.log(`Usage: ${args[1]} <filename> <ruleset>`)
+    return
+  }
+
+  const lines = new NReadLines(args[2])
   let line = lines.next()
 
-  console.log(`package rulesets
+  console.log(`package ${args[3]}
 
 // AUTO-GENERATED FILE - DO NOT EDIT
 // USE THE SCRIPT parse_terrain_ruleset.js TO RE-GENERATE IF NEEDED

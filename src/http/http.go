@@ -18,7 +18,7 @@ func StartServer() {
 		return c.SendString("Only JSON allowed!")
 	})
 
-	app.Post("/api/v1/LTT/attack", attack)
+	app.Post("/api/v1/:ruleset/attack", attack)
 
 	log.Fatal(app.Listen(":7123"))
 }

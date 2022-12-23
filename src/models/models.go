@@ -12,15 +12,22 @@ const (
 
 const (
 	NoClass UnitClassName = iota
+	Amphibious
+	AncientLand
 	Air
 	BigLand
 	BigSiege
+	DeepSea
 	Helicopter
 	Land
 	Merchant
 	Missile
+	Nuclear
+	Patrol
 	Sea
 	SmallLand
+	SmallSea
+	SmallUnit
 	Trireme
 )
 
