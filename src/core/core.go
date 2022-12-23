@@ -173,5 +173,11 @@ func getCityDefenseBonus(avd models.BaseStats) float32 {
 }
 
 func getTerrainBonus(avd models.BaseStats) float32 {
-	return float32((100 + avd.Terrain.DefenseBonus) / 100)
+	bonus := float32((100 + avd.Terrain.DefenseBonus) / 100)
+
+	if avd.Input.Defender.Terrain.HasRiver {
+		bonus *= 1.5
+	}
+
+	return bonus
 }

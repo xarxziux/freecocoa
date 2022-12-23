@@ -131,7 +131,6 @@ type DefenderUnit struct {
 	Name         string `json:"name"`
 	VetLevel     uint8  `json:"vetLevel"`
 	HP           uint8  `json:"hp"`
-	HasRiver     bool   `json:"hasRiver"`
 	HasCity      bool   `json:"hasCity"`
 	HasFortress  bool   `json:"hasFortress"`
 	IsFortified  bool   `json:"isFortified"`
