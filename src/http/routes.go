@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var supportedRulesets []string = []string{"ltt", "ltx", "lt75"}
+var supportedRulesets []string = []string{"ltt", "ltx", "lt75", "lt76"}
 
 func attack(c *fiber.Ctx) error {
 	ruleset := c.Params("ruleset")

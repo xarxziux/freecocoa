@@ -71,20 +71,20 @@ type CityStats struct {
 }
 
 type AttackStats struct {
-	AP float32
-	HP uint8
-	FP uint8
+	AP float32 `json:"attack_power"`
+	HP uint8   `json:"hitpoints"`
+	FP uint8   `json:"firepower"`
 }
 
 type DefenceStats struct {
-	DP float32
-	HP uint8
-	FP uint8
+	DP float32 `json:"defense_power"`
+	HP uint8   `json:"hitpoints"`
+	FP uint8   `json:"firepower"`
 }
 
 type FinalStats struct {
-	Attacker AttackStats
-	Defender DefenceStats
+	Attacker AttackStats  `json:"attacker"`
+	Defender DefenceStats `json:"defender"`
 }
 
 type UnitClass struct {

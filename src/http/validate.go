@@ -6,6 +6,7 @@ import (
 
 	"freecocoa/src/models"
 	"freecocoa/src/rulesets/lt75"
+	"freecocoa/src/rulesets/lt76"
 	"freecocoa/src/rulesets/ltt"
 	"freecocoa/src/rulesets/ltx"
 )
@@ -35,6 +36,10 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 		attUnit, attOK = lt75.UnitStats[avd.Attacker.Name]
 		defUnit, defOK = lt75.UnitStats[avd.Defender.Name]
 		terrain, terrOK = lt75.TerrainStats[avd.Defender.Terrain.Type]
+	case "lt76":
+		attUnit, attOK = lt76.UnitStats[avd.Attacker.Name]
+		defUnit, defOK = lt76.UnitStats[avd.Defender.Name]
+		terrain, terrOK = lt76.TerrainStats[avd.Defender.Terrain.Type]
 	default:
 		panic("validation failure: bad ruleset")
 	}

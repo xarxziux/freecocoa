@@ -25,7 +25,7 @@ func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
 
 	// Apply veteran levels
 	attackPower := avd.Details.Attacker.AP * veteranLevels[avd.Input.Attacker.VetLevel]
-	defensePower := avd.Details.Defender.AP * veteranLevels[avd.Input.Defender.VetLevel]
+	defensePower := avd.Details.Defender.DP * veteranLevels[avd.Input.Defender.VetLevel]
 
 	// Unit V unit specifics
 	if avd.Details.Attacker.Horse && avd.Details.Defender.Name == "Pikemen" {
