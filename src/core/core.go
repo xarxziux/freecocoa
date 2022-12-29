@@ -4,7 +4,7 @@ import (
 	"freecocoa/src/models"
 )
 
-var veteranLevels = [10]float32{1.0, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
+var veteranLevels = [10]float32{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
 
 func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
 	finalStats := models.FinalStats{}
@@ -134,7 +134,6 @@ func getCityDefenseBonus(avd models.BaseStats) float32 {
 	if avd.Input.Defender.City.HasWalls {
 		switch avd.Details.Defender.Class.NameEnum {
 		case models.Air, models.Helicopter, models.Missile, models.Sea, models.Trireme:
-			bonus *= 1
 		default:
 			bonus *= 2
 		}
