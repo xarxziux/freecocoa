@@ -4,7 +4,7 @@ import (
 	"freecocoa/src/models"
 )
 
-var veteranLevels = [10]float32{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
+var veteranLevels = [10]float64{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
 
 func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
 	finalStats := models.FinalStats{}
@@ -65,7 +65,7 @@ func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
 }
 
 // Based on https://github.com/longturn/freeciv21/blob/51fea1b5f0cedc9361709a574c9d062b6f6f7f7c/common/combat.cpp#L352
-func setFirepower(base models.BaseStats) (uint8, uint8) {
+func setFirepower(base models.BaseStats) (int, int) {
 	attFP := base.Details.Attacker.FP
 	defFP := base.Details.Defender.FP
 
@@ -88,7 +88,7 @@ func setFirepower(base models.BaseStats) (uint8, uint8) {
 	return attFP, defFP
 }
 
-func getCitySize(size uint8) models.CityType {
+func getCitySize(size int) models.CityType {
 	if size == 0 {
 		return models.NoCity
 	}
@@ -100,14 +100,14 @@ func getCitySize(size uint8) models.CityType {
 	return models.City
 }
 
-func getCityDefenseBonus(avd models.BaseStats) float32 {
+func getCityDefenseBonus(avd models.BaseStats) float64 {
 	citySize := getCitySize(avd.Input.Defender.City.Size)
 
 	if citySize == models.NoCity {
 		panic("Validation error: city size 0")
 	}
 
-	bonus := float32(1)
+	bonus := float64(1)
 
 	// Due to the way the logic in effects.ruleset is organised,
 	// some of these switch statements filter exceptions and
@@ -171,8 +171,8 @@ func getCityDefenseBonus(avd models.BaseStats) float32 {
 	return bonus
 }
 
-func getTerrainBonus(avd models.BaseStats) float32 {
-	bonus := float32((100 + avd.Terrain.DefenseBonus) / 100)
+func getTerrainBonus(avd models.BaseStats) float64 {
+	bonus := float64((100 + avd.Terrain.DefenseBonus) / 100)
 
 	if avd.Input.Defender.Terrain.HasRiver {
 		bonus *= 1.5

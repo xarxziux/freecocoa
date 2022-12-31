@@ -56,7 +56,7 @@ const (
 type TerrainType struct {
 	Name         string
 	Class        TerrainClass
-	DefenseBonus uint8
+	DefenseBonus int
 	CanHaveRiver bool
 	NoCities     bool
 	NoFortify    bool
@@ -64,22 +64,22 @@ type TerrainType struct {
 }
 
 type CityStats struct {
-	Size           uint8 `json:"size"`
-	Walls          bool  `json:"walls"`
-	GreatWalls     bool  `json:"greatWalls"`
-	CoastalDefence bool  `json:"coastalDefence"`
+	Size           int  `json:"size"`
+	Walls          bool `json:"walls"`
+	GreatWalls     bool `json:"greatWalls"`
+	CoastalDefence bool `json:"coastalDefence"`
 }
 
 type AttackStats struct {
-	AP float32 `json:"attack_power"`
-	HP uint8   `json:"hitpoints"`
-	FP uint8   `json:"firepower"`
+	AP float64 `json:"attack_power"`
+	HP int     `json:"hitpoints"`
+	FP int     `json:"firepower"`
 }
 
 type DefenceStats struct {
-	DP float32 `json:"defense_power"`
-	HP uint8   `json:"hitpoints"`
-	FP uint8   `json:"firepower"`
+	DP float64 `json:"defense_power"`
+	HP int     `json:"hitpoints"`
+	FP int     `json:"firepower"`
 }
 
 type FinalStats struct {
@@ -101,10 +101,10 @@ type UnitClass struct {
 type UnitDetails struct {
 	Name             string
 	Class            UnitClass
-	AP               float32
-	DP               float32
-	HP               uint8
-	FP               uint8
+	AP               float64
+	DP               float64
+	HP               int
+	FP               int
 	CityBuster       bool
 	AirAttacker      bool
 	Horse            bool
@@ -120,13 +120,13 @@ type PairDetails struct {
 }
 
 type DefenderCity struct {
-	Size              uint8 `json:"size"`
-	HasWalls          bool  `json:"hasWalls"`
-	HasGreatWall      bool  `json:"hasGreatWall"`
-	HasCoastalDefence bool  `json:"hasCoastalDefence"`
-	HasSAM            bool  `json:"hasSAM"`
-	SDILevel          uint8 `json:"sdiLevel"`
-	IsCapital         bool  `json:"isCapital"`
+	Size              int  `json:"size"`
+	HasWalls          bool `json:"hasWalls"`
+	HasGreatWall      bool `json:"hasGreatWall"`
+	HasCoastalDefence bool `json:"hasCoastalDefence"`
+	HasSAM            bool `json:"hasSAM"`
+	SDILevel          int  `json:"sdiLevel"`
+	IsCapital         bool `json:"isCapital"`
 }
 
 type DefenderTerrain struct {
@@ -136,8 +136,8 @@ type DefenderTerrain struct {
 
 type DefenderUnit struct {
 	Name         string `json:"name"`
-	VetLevel     uint8  `json:"vetLevel"`
-	HP           uint8  `json:"hp"`
+	VetLevel     int    `json:"vetLevel"`
+	HP           int    `json:"hp"`
 	HasCity      bool   `json:"hasCity"`
 	HasFortress  bool   `json:"hasFortress"`
 	IsFortified  bool   `json:"isFortified"`
@@ -149,8 +149,8 @@ type DefenderUnit struct {
 
 type AttackerUnit struct {
 	Name     string `json:"name"`
-	VetLevel uint8  `json:"vetLevel"`
-	HP       uint8  `json:"hp"`
+	VetLevel int    `json:"vetLevel"`
+	HP       int    `json:"hp"`
 }
 
 type AttackerVDefender struct {
@@ -162,4 +162,17 @@ type BaseStats struct {
 	Input   AttackerVDefender
 	Details PairDetails
 	Terrain TerrainType
+}
+
+type CombatResult struct {
+	AttProb  float64
+	AttHP    float64
+	DefProb  float64
+	DefHP    float64
+	DefDelta float64
+}
+
+type CombatResults struct {
+	Prob    float64
+	Results []CombatResult
 }
