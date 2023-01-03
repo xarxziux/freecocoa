@@ -49,7 +49,7 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 	}
 
 	if !defOK {
-		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
+		return nil, fmt.Errorf("unit \"%s\" not found", avd.Defender.Name)
 	}
 
 	if !terrOK {
