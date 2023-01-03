@@ -68,7 +68,10 @@ func remhp(atthp, defhp, attfp, deffp int, attpo, defpo float64) float64 {
 }
 
 func winprob(p float64, hp1, hp2, fp1, fp2 int) float64 {
-	dp := [][]float64{}
+	dp := make([][]float64, hp1+1)
+	for i := range dp {
+		dp[i] = make([]float64, hp2+1)
+	}
 
 	for i := 0; i < hp1; i++ {
 		for j := 0; j < hp2; j++ {
@@ -90,7 +93,10 @@ func winprob(p float64, hp1, hp2, fp1, fp2 int) float64 {
 }
 
 func exphp(lp float64, hp1, hp2, fp1, fp2 int) float64 {
-	dh := [][]float64{}
+	dh := make([][]float64, hp1+1)
+	for i := range dh {
+		dh[i] = make([]float64, hp2+2)
+	}
 
 	for i := 0; i < hp1; i++ {
 		for j := 0; j < hp2; j++ {
