@@ -165,11 +165,11 @@ type BaseStats struct {
 }
 
 type CombatResult struct {
-	AttProb  float64 `json:"attackProbability"`
-	AttHP    float64 `json:"attackerHP"`
-	DefProb  float64 `json:"defenderProbability"`
-	DefHP    float64 `json:"defenderHP"`
-	DefDelta float64 `json:"defenderDelta"`
+	AttProb  string `json:"attackProbability"`
+	AttHP    string `json:"attackerHP"`
+	DefProb  string `json:"defenderProbability"`
+	DefHP    string `json:"defenderHP"`
+	DefDelta string `json:"defenderDelta"`
 }
 
 type CombatResults struct {

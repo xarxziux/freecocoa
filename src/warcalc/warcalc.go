@@ -1,6 +1,7 @@
 package warcalc
 
 import (
+	"fmt"
 	"freecocoa/src/models"
 	"math"
 )
@@ -135,11 +136,11 @@ func Warcalc(avd models.FinalStats) models.CombatResults {
 		aexphp := exphp(1.0-p, ahp, ndhp, afp, dfp)
 		delta := float64(ndhp) - dexphp
 		results := models.CombatResult{
-			AttProb:  attprob,
-			AttHP:    aexphp,
-			DefProb:  defprob,
-			DefHP:    dexphp,
-			DefDelta: delta,
+			AttProb:  fmt.Sprintf("%.2f", attprob) + "%",
+			AttHP:    fmt.Sprintf("%.2f", aexphp),
+			DefProb:  fmt.Sprintf("%.2f", defprob) + "%",
+			DefHP:    fmt.Sprintf("%.2f", dexphp),
+			DefDelta: fmt.Sprintf("%.2f", delta),
 		}
 
 		tab = append(tab, results)
