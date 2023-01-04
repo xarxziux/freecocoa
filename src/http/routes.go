@@ -38,8 +38,6 @@ func attack(c *fiber.Ctx) error {
 }
 
 func calculate(c *fiber.Ctx) error {
-	fmt.Println("calculate called")
-
 	avd := models.FinalStats{}
 	err := c.BodyParser(&avd)
 	if err != nil {

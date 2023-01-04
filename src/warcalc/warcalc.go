@@ -44,9 +44,9 @@ func newt(n, k int) int {
 }
 
 func remhp(atthp, defhp, attfp, deffp int, attpo, defpo float64) float64 {
-	p := attpo / (attpo + defpo)
-	k := int(float64(defhp / attfp))
-	l := int(float64(atthp / deffp))
+	p := float64(attpo / (defpo + attpo))
+	k := int(float64(defhp) / float64(attfp))
+	l := int(float64(atthp) / float64(deffp))
 
 	x := 0.0
 
@@ -73,8 +73,8 @@ func winprob(p float64, hp1, hp2, fp1, fp2 int) float64 {
 		dp[i] = make([]float64, hp2+1)
 	}
 
-	for i := 0; i < hp1; i++ {
-		for j := 0; j < hp2; j++ {
+	for i := 0; i < hp1+1; i++ {
+		for j := 0; j < hp2+1; j++ {
 			if i == 0 {
 				dp[i][j] = 0
 				continue
@@ -98,8 +98,8 @@ func exphp(lp float64, hp1, hp2, fp1, fp2 int) float64 {
 		dh[i] = make([]float64, hp2+2)
 	}
 
-	for i := 0; i < hp1; i++ {
-		for j := 0; j < hp2; j++ {
+	for i := 0; i < hp1+1; i++ {
+		for j := 0; j < hp2+1; j++ {
 			if i == 0 {
 				dh[i][j] = 0
 				continue
@@ -124,9 +124,9 @@ func Warcalc(avd models.FinalStats) models.CombatResults {
 	dstr := avd.Defender.DP
 	dhp := avd.Defender.HP
 	dfp := avd.Defender.FP
-	p := astr / (astr + dstr)
+	p := float64(astr) / float64(astr+dstr)
 	tab := make([]models.CombatResult, 0, 20)
-	ndhp := (dhp)
+	ndhp := dhp
 
 	for i := 0; i < 20; i++ {
 		defprob := winprob(p, ndhp, ahp, dfp, afp)
@@ -144,7 +144,7 @@ func Warcalc(avd models.FinalStats) models.CombatResults {
 
 		tab = append(tab, results)
 
-		ndhp := int(dexphp)
+		ndhp = int(dexphp)
 		if ndhp == 0 {
 			break
 		}
