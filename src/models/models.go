@@ -63,21 +63,14 @@ type TerrainType struct {
 	UnsafeCoast  bool
 }
 
-type CityStats struct {
-	Size           int  `json:"size"`
-	Walls          bool `json:"walls"`
-	GreatWalls     bool `json:"greatWalls"`
-	CoastalDefence bool `json:"coastalDefence"`
-}
-
 type AttackStats struct {
-	AP float64 `json:"attack_power"`
+	AP float64 `json:"attackPower"`
 	HP int     `json:"hitpoints"`
 	FP int     `json:"firepower"`
 }
 
 type DefenceStats struct {
-	DP float64 `json:"defense_power"`
+	DP float64 `json:"defensePower"`
 	HP int     `json:"hitpoints"`
 	FP int     `json:"firepower"`
 }
@@ -122,7 +115,6 @@ type PairDetails struct {
 type DefenderCity struct {
 	Size              int  `json:"size"`
 	HasWalls          bool `json:"hasWalls"`
-	HasGreatWall      bool `json:"hasGreatWall"`
 	HasCoastalDefence bool `json:"hasCoastalDefence"`
 	HasSAM            bool `json:"hasSAM"`
 	SDILevel          int  `json:"sdiLevel"`
@@ -141,7 +133,7 @@ type DefenderUnit struct {
 	HasCity      bool   `json:"hasCity"`
 	HasFortress  bool   `json:"hasFortress"`
 	IsFortified  bool   `json:"isFortified"`
-	HasGreatWall bool   `json:""`
+	HasGreatWall bool   `json:"hasGreatWall"`
 
 	City    DefenderCity    `json:"city"`
 	Terrain DefenderTerrain `json:"terrain"`
@@ -175,4 +167,9 @@ type CombatResult struct {
 type CombatResults struct {
 	Prob    float64        `json:"probability"`
 	Results []CombatResult `json:"results"`
+}
+
+type CombinedResults struct {
+	Stats  FinalStats
+	Combat CombatResults
 }

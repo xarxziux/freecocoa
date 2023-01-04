@@ -34,7 +34,12 @@ func attack(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.JSON(finalStats)
+	combatResults := warcalc.Warcalc(*finalStats)
+
+	return c.JSON(models.CombinedResults{
+		Stats:  *finalStats,
+		Combat: combatResults,
+	})
 }
 
 func calculate(c *fiber.Ctx) error {
