@@ -115,7 +115,7 @@ func getCityDefenseBonus(avd models.BaseStats) float64 {
 	switch citySize {
 	case models.Town:
 		switch avd.Details.Defender.Class.NameEnum {
-		case models.Air, models.Helicopter, models.Missile, models.Sea, models.Trireme:
+		case models.Air, models.DeepSea, models.Helicopter, models.Missile, models.Nuclear, models.Patrol, models.Sea, models.SmallSea, models.Trireme:
 			bonus = 1.0
 		default:
 			bonus = 1.5
@@ -170,7 +170,7 @@ func getCityDefenseBonus(avd models.BaseStats) float64 {
 
 	if avd.Input.Defender.HasGreatWall {
 		switch avd.Details.Defender.Class.NameEnum {
-		case models.Air, models.Helicopter, models.Missile, models.Sea, models.Trireme:
+		case models.Air, models.DeepSea, models.Helicopter, models.Missile, models.Nuclear, models.Patrol, models.Sea, models.SmallSea, models.Trireme:
 			_ = true
 		default:
 			bonus *= 1.4
