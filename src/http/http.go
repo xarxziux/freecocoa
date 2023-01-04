@@ -19,6 +19,7 @@ func StartServer() {
 	})
 
 	app.Post("/api/v1/:ruleset/attack", attack)
+	app.Post("/api/v1/calculate", calculate)
 
 	log.Fatal(app.Listen(":7123"))
 }

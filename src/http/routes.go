@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"freecocoa/src/core"
 	"freecocoa/src/models"
+	"freecocoa/src/warcalc"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -34,6 +35,28 @@ func attack(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(finalStats)
+}
+
+func calculate(c *fiber.Ctx) error {
+	fmt.Println("calculate called")
+
+	avd := models.FinalStats{}
+	err := c.BodyParser(&avd)
+	if err != nil {
+		return err
+	}
+
+	// TODO: Add validation
+	/*
+		baseStats, err := validateInput(avd, ruleset)
+		if err != nil {
+			return err
+		}
+	*/
+
+	combatResults := warcalc.Warcalc(avd)
+
+	return c.JSON(combatResults)
 }
 
 func isSupportedRuleset(rs string) bool {
