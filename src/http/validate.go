@@ -71,7 +71,7 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 	if (avd.Defender.HasCity && avd.Defender.HasFortress) ||
 		(avd.Defender.HasCity && avd.Defender.IsFortified) ||
 		(avd.Defender.HasFortress && avd.Defender.IsFortified) {
-		return nil, fmt.Errorf("only one of HasCity, HasFortress and IsFortified can be true")
+		return nil, fmt.Errorf("at most, only one of hasCity, hasFortress and isFortified can be true")
 	}
 
 	if avd.Defender.HasCity && avd.Defender.City.Size == 0 {
