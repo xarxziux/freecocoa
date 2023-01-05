@@ -170,6 +170,6 @@ type CombatResults struct {
 }
 
 type CombinedResults struct {
-	Stats  FinalStats
-	Combat CombatResults
+	Stats  FinalStats    `json:"stats"`
+	Combat CombatResults `json:"combat"`
 }
