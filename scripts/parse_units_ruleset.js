@@ -212,7 +212,7 @@ const convertClassNames = (className) => {
   if (className === 'land_big') return 'bigland'
   if (className === 'land_siege') return 'bigsiege'
   if (className === 'heli') return 'helicopter'
-  return className
+  return className.replace('_', '')
 }
 
 main()

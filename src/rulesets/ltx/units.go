@@ -25,12 +25,12 @@ var UnitClassStats = map[string]models.UnitClass{
 		TerrainDefense: true,
 		CanFortify:     true,
 	},
-	"ancient_land": {
+	"ancientland": {
 		NameEnum:       models.AncientLand,
 		TerrainDefense: true,
 		CanFortify:     true,
 	},
-	"small_unit": {
+	"smallunit": {
 		NameEnum:       models.SmallUnit,
 		TerrainDefense: true,
 		CanFortify:     true,
@@ -62,10 +62,10 @@ var UnitClassStats = map[string]models.UnitClass{
 		NameEnum:        models.Sea,
 		AttackNonNative: true,
 	},
-	"small_sea": {
+	"smallsea": {
 		NameEnum: models.SmallSea,
 	},
-	"deep_sea": {
+	"deepsea": {
 		NameEnum:    models.DeepSea,
 		Unreachable: true,
 	},
