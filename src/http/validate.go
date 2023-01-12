@@ -24,19 +24,19 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 	}
 
 	switch ruleset {
-	case "ltt":
+	case LTT:
 		attUnit, attOK = ltt.UnitStats[avd.Attacker.Name]
 		defUnit, defOK = ltt.UnitStats[avd.Defender.Name]
 		terrain, terrOK = ltt.TerrainStats[avd.Defender.Terrain.Type]
-	case "ltx":
+	case LTX:
 		attUnit, attOK = ltx.UnitStats[avd.Attacker.Name]
 		defUnit, defOK = ltx.UnitStats[avd.Defender.Name]
 		terrain, terrOK = ltx.TerrainStats[avd.Defender.Terrain.Type]
-	case "lt75":
+	case LT75:
 		attUnit, attOK = lt75.UnitStats[avd.Attacker.Name]
 		defUnit, defOK = lt75.UnitStats[avd.Defender.Name]
 		terrain, terrOK = lt75.TerrainStats[avd.Defender.Terrain.Type]
-	case "lt76":
+	case LT76:
 		attUnit, attOK = lt76.UnitStats[avd.Attacker.Name]
 		defUnit, defOK = lt76.UnitStats[avd.Defender.Name]
 		terrain, terrOK = lt76.TerrainStats[avd.Defender.Terrain.Type]
