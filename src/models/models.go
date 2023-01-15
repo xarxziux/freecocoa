@@ -143,6 +143,7 @@ type AttackerUnit struct {
 	Name     string `json:"name"`
 	VetLevel int    `json:"vetLevel"`
 	HP       int    `json:"hp"`
+	MP       int    `json:"mp"`
 }
 
 type AttackerVDefender struct {

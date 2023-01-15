@@ -58,6 +58,9 @@ func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
 		defensePower *= getCityDefenseBonus(avd)
 	}
 
+	// Apply movement point penalty
+	attackPower *= float64(avd.Input.Attacker.MP) / 9.0
+
 	finalStats.Attacker.AP = attackPower
 	finalStats.Defender.DP = defensePower
 

@@ -56,8 +56,19 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 		return nil, fmt.Errorf("unrecognised terrain type \"%s\"", avd.Defender.Terrain.Type)
 	}
 
-	if avd.Attacker.VetLevel > 9 || avd.Defender.VetLevel > 9 {
+	if avd.Attacker.VetLevel < 0 ||
+		avd.Attacker.VetLevel > 9 ||
+		avd.Defender.VetLevel < 0 ||
+		avd.Defender.VetLevel > 9 {
 		return nil, errors.New("veteran level must be an integer between 0 and 9")
+	}
+
+	if avd.Attacker.MP < 0 || avd.Attacker.MP > 9 {
+		return nil, errors.New("movement points must be an integer between 0 and 9")
+	}
+
+	if avd.Attacker.MP == 0 {
+		avd.Attacker.MP = 9
 	}
 
 	if avd.Attacker.HP > attUnit.HP {
