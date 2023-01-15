@@ -5,55 +5,27 @@ import (
 	"fmt"
 
 	"freecocoa/src/models"
-	"freecocoa/src/rulesets/lt75"
-	"freecocoa/src/rulesets/lt76"
-	"freecocoa/src/rulesets/ltt"
-	"freecocoa/src/rulesets/ltx"
+	"freecocoa/src/rulesets"
 )
 
 func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseStats, error) {
-	var attUnit models.UnitDetails
-	var defUnit models.UnitDetails
-	var terrain models.TerrainType
-	var attOK bool
-	var defOK bool
-	var terrOK bool
-
 	if avd.Defender.Terrain.Type == "" {
 		return nil, fmt.Errorf("no terrain details found")
 	}
 
-	switch ruleset {
-	case LTT:
-		attUnit, attOK = ltt.UnitStats[avd.Attacker.Name]
-		defUnit, defOK = ltt.UnitStats[avd.Defender.Name]
-		terrain, terrOK = ltt.TerrainStats[avd.Defender.Terrain.Type]
-	case LTX:
-		attUnit, attOK = ltx.UnitStats[avd.Attacker.Name]
-		defUnit, defOK = ltx.UnitStats[avd.Defender.Name]
-		terrain, terrOK = ltx.TerrainStats[avd.Defender.Terrain.Type]
-	case LT75:
-		attUnit, attOK = lt75.UnitStats[avd.Attacker.Name]
-		defUnit, defOK = lt75.UnitStats[avd.Defender.Name]
-		terrain, terrOK = lt75.TerrainStats[avd.Defender.Terrain.Type]
-	case LT76:
-		attUnit, attOK = lt76.UnitStats[avd.Attacker.Name]
-		defUnit, defOK = lt76.UnitStats[avd.Defender.Name]
-		terrain, terrOK = lt76.TerrainStats[avd.Defender.Terrain.Type]
-	default:
-		panic("validation failure: bad ruleset")
+	attUnit, err := rulesets.GetUnit(avd.Attacker.Name, ruleset)
+	if err != nil {
+		return nil, err
 	}
 
-	if !attOK {
-		return nil, fmt.Errorf("unit \"%s\" not found", avd.Attacker.Name)
+	defUnit, err := rulesets.GetUnit(avd.Defender.Name, ruleset)
+	if err != nil {
+		return nil, err
 	}
 
-	if !defOK {
-		return nil, fmt.Errorf("unit \"%s\" not found", avd.Defender.Name)
-	}
-
-	if !terrOK {
-		return nil, fmt.Errorf("unrecognised terrain type \"%s\"", avd.Defender.Terrain.Type)
+	terrain, err := rulesets.GetTerrain(avd.Defender.Terrain.Type, ruleset)
+	if err != nil {
+		return nil, err
 	}
 
 	if avd.Attacker.VetLevel < 0 ||
@@ -92,9 +64,9 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 	return &models.BaseStats{
 		Input: avd,
 		Details: models.PairDetails{
-			Attacker: attUnit,
-			Defender: defUnit,
+			Attacker: *attUnit,
+			Defender: *defUnit,
 		},
-		Terrain: terrain,
+		Terrain: *terrain,
 	}, nil
 }
