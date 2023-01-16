@@ -10,7 +10,7 @@ import (
 	"freecocoa/src/rulesets/ltx"
 )
 
-func GetUnit(unitName, ruleset string) (*models.UnitDetails, error) {
+func getUnit(unitName, ruleset string) (*models.UnitDetails, error) {
 	var unit models.UnitDetails
 	var ok bool
 
@@ -34,7 +34,7 @@ func GetUnit(unitName, ruleset string) (*models.UnitDetails, error) {
 	return &unit, nil
 }
 
-func GetTerrain(terrainName, ruleset string) (*models.TerrainType, error) {
+func getTerrain(terrainName, ruleset string) (*models.TerrainType, error) {
 	var terrain models.TerrainType
 	var ok bool
 

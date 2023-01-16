@@ -118,7 +118,7 @@ func exphp(lp float64, hp1, hp2, fp1, fp2 int) float64 {
 	return dh[hp1][hp2]
 }
 
-func Warcalc(avd models.FinalStats) models.CombatResults {
+func Warcalc(avd *models.FinalStats) *models.CombatResults {
 	astr := avd.Attacker.AP
 	ahp := avd.Attacker.HP
 	afp := avd.Attacker.FP
@@ -126,7 +126,7 @@ func Warcalc(avd models.FinalStats) models.CombatResults {
 	dhp := avd.Defender.HP
 	dfp := avd.Defender.FP
 	p := float64(astr) / float64(astr+dstr)
-	tab := make([]models.CombatResult, 0, 20)
+	tab := make([]*models.CombatResult, 0, 20)
 	ndhp := dhp
 
 	for i := 0; i < 20; i++ {
@@ -143,7 +143,7 @@ func Warcalc(avd models.FinalStats) models.CombatResults {
 			DefDelta: fmt.Sprintf("%.2f", delta),
 		}
 
-		tab = append(tab, results)
+		tab = append(tab, &results)
 
 		ndhp = int(dexphp)
 		if ndhp == 0 {
@@ -153,7 +153,7 @@ func Warcalc(avd models.FinalStats) models.CombatResults {
 
 	prob := remhp(ahp, dhp, afp, dfp, astr, dstr)
 
-	return models.CombatResults{
+	return &models.CombatResults{
 		Prob:    prob,
 		Results: tab,
 	}

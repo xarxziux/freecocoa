@@ -69,7 +69,7 @@ type AttackStats struct {
 	FP int     `json:"firepower"`
 }
 
-type DefenceStats struct {
+type DefenseStats struct {
 	DP float64 `json:"defensePower"`
 	HP int     `json:"hitpoints"`
 	FP int     `json:"firepower"`
@@ -77,7 +77,7 @@ type DefenceStats struct {
 
 type FinalStats struct {
 	Attacker AttackStats  `json:"attacker"`
-	Defender DefenceStats `json:"defender"`
+	Defender DefenseStats `json:"defender"`
 }
 
 type UnitClass struct {
@@ -115,7 +115,7 @@ type PairDetails struct {
 type DefenderCity struct {
 	Size              int  `json:"size"`
 	HasWalls          bool `json:"hasWalls"`
-	HasCoastalDefence bool `json:"hasCoastalDefence"`
+	HasCoastalDefense bool `json:"hasCoastalDefense"`
 	HasSAM            bool `json:"hasSAM"`
 	SDILevel          int  `json:"sdiLevel"`
 	IsCapital         bool `json:"isCapital"`
@@ -130,9 +130,10 @@ type DefenderUnit struct {
 	Name         string `json:"name"`
 	VetLevel     int    `json:"vetLevel"`
 	HP           int    `json:"hp"`
-	HasCity      bool   `json:"hasCity"`
-	HasFortress  bool   `json:"hasFortress"`
 	IsFortified  bool   `json:"isFortified"`
+	HasFortress  bool   `json:"hasFortress"`
+	HasAirbase   bool   `json:"isInAirbase"`
+	HasCity      bool   `json:"hasCity"`
 	HasGreatWall bool   `json:"hasGreatWall"`
 
 	City    DefenderCity    `json:"city"`
@@ -166,11 +167,11 @@ type CombatResult struct {
 }
 
 type CombatResults struct {
-	Prob    float64        `json:"probability"`
-	Results []CombatResult `json:"results"`
+	Prob    float64         `json:"probability"`
+	Results []*CombatResult `json:"results"`
 }
 
 type CombinedResults struct {
-	Stats  FinalStats    `json:"stats"`
-	Combat CombatResults `json:"combat"`
+	Stats  *FinalStats    `json:"stats"`
+	Combat *CombatResults `json:"combat"`
 }

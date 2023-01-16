@@ -6,6 +6,7 @@ import (
 
 	"freecocoa/src/core"
 	"freecocoa/src/models"
+	"freecocoa/src/rulesets"
 	"freecocoa/src/rulesets/lt75"
 	"freecocoa/src/rulesets/lt76"
 	"freecocoa/src/rulesets/ltt"
@@ -35,20 +36,16 @@ func attack(c *fiber.Ctx) error {
 		return err
 	}
 
-	baseStats, err := validateInput(avd, ruleset)
+	baseStats, err := rulesets.PopulateInput(avd, ruleset)
 	if err != nil {
 		return err
 	}
 
-	finalStats, err := core.GetStats(*baseStats)
-	if err != nil {
-		return err
-	}
-
-	combatResults := warcalc.Warcalc(*finalStats)
+	finalStats := core.GetStats(baseStats)
+	combatResults := warcalc.Warcalc(finalStats)
 
 	return c.JSON(models.CombinedResults{
-		Stats:  *finalStats,
+		Stats:  finalStats,
 		Combat: combatResults,
 	})
 }
@@ -68,7 +65,7 @@ func calculate(c *fiber.Ctx) error {
 		}
 	*/
 
-	combatResults := warcalc.Warcalc(avd)
+	combatResults := warcalc.Warcalc(&avd)
 
 	return c.JSON(combatResults)
 }

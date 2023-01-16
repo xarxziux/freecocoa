@@ -1,29 +1,28 @@
-package http
+package rulesets
 
 import (
 	"errors"
 	"fmt"
 
 	"freecocoa/src/models"
-	"freecocoa/src/rulesets"
 )
 
-func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseStats, error) {
+func PopulateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseStats, error) {
 	if avd.Defender.Terrain.Type == "" {
 		return nil, fmt.Errorf("no terrain details found")
 	}
 
-	attUnit, err := rulesets.GetUnit(avd.Attacker.Name, ruleset)
+	attUnit, err := getUnit(avd.Attacker.Name, ruleset)
 	if err != nil {
 		return nil, err
 	}
 
-	defUnit, err := rulesets.GetUnit(avd.Defender.Name, ruleset)
+	defUnit, err := getUnit(avd.Defender.Name, ruleset)
 	if err != nil {
 		return nil, err
 	}
 
-	terrain, err := rulesets.GetTerrain(avd.Defender.Terrain.Type, ruleset)
+	terrain, err := getTerrain(avd.Defender.Terrain.Type, ruleset)
 	if err != nil {
 		return nil, err
 	}
@@ -51,10 +50,8 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 		return nil, fmt.Errorf("defender HP must be an integer between 1 and %d (0 or missing defaults to %d)", defUnit.HP, defUnit.HP)
 	}
 
-	if (avd.Defender.HasCity && avd.Defender.HasFortress) ||
-		(avd.Defender.HasCity && avd.Defender.IsFortified) ||
-		(avd.Defender.HasFortress && avd.Defender.IsFortified) {
-		return nil, fmt.Errorf("at most, only one of hasCity, hasFortress and isFortified can be true")
+	if hasOnlyOneStructure(avd.Defender.IsFortified, avd.Defender.HasFortress, avd.Defender.HasAirbase, avd.Defender.HasCity) {
+		return nil, fmt.Errorf("at most, only one of isFortified, hasFortress, hasAirbase and hasCity can be true")
 	}
 
 	if avd.Defender.HasCity && avd.Defender.City.Size == 0 {
@@ -69,4 +66,26 @@ func validateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 		},
 		Terrain: *terrain,
 	}, nil
+}
+
+func hasOnlyOneStructure(isFortified, hasFortress, hasAirbase, hasCity bool) bool {
+	x := 0
+
+	if isFortified {
+		x++
+	}
+
+	if hasFortress {
+		x++
+	}
+
+	if hasAirbase {
+		x++
+	}
+
+	if hasCity {
+		x++
+	}
+
+	return x < 2
 }

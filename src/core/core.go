@@ -6,7 +6,7 @@ import (
 
 var veteranLevels = [10]float64{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
 
-func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
+func GetStats(avd *models.BaseStats) *models.FinalStats {
 	finalStats := models.FinalStats{}
 
 	finalStats.Attacker.FP, finalStats.Defender.FP = setFirepower(avd)
@@ -46,7 +46,19 @@ func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
 	}
 
 	if avd.Details.Defender.Class.CanFortify && avd.Input.Defender.HasFortress {
-		defensePower *= 2
+		switch avd.Details.Attacker.Class.Name {
+		case "air", "helicopter", "missile":
+		default:
+			defensePower *= 2
+		}
+	}
+
+	if avd.Details.Defender.Class.CanFortify &&
+		avd.Input.Defender.HasAirbase {
+		switch avd.Details.Attacker.Class.Name {
+		case "air", "helicopter", "missile":
+			defensePower *= 2
+		}
 	}
 
 	// Terrain bonuses
@@ -64,11 +76,11 @@ func GetStats(avd models.BaseStats) (*models.FinalStats, error) {
 	finalStats.Attacker.AP = attackPower
 	finalStats.Defender.DP = defensePower
 
-	return &finalStats, nil
+	return &finalStats
 }
 
 // Based on https://github.com/longturn/freeciv21/blob/51fea1b5f0cedc9361709a574c9d062b6f6f7f7c/common/combat.cpp#L352
-func setFirepower(base models.BaseStats) (int, int) {
+func setFirepower(base *models.BaseStats) (int, int) {
 	attFP := base.Details.Attacker.FP
 	defFP := base.Details.Defender.FP
 
@@ -103,7 +115,7 @@ func getCitySize(size int) models.CityType {
 	return models.City
 }
 
-func getCityDefenseBonus(avd models.BaseStats) float64 {
+func getCityDefenseBonus(avd *models.BaseStats) float64 {
 	citySize := getCitySize(avd.Input.Defender.City.Size)
 
 	if citySize == models.NoCity {
@@ -142,7 +154,7 @@ func getCityDefenseBonus(avd models.BaseStats) float64 {
 		}
 	}
 
-	if avd.Input.Defender.City.HasCoastalDefence {
+	if avd.Input.Defender.City.HasCoastalDefense {
 		switch avd.Details.Defender.Class.NameEnum {
 		case models.Sea, models.Trireme:
 			bonus *= 2
@@ -183,11 +195,11 @@ func getCityDefenseBonus(avd models.BaseStats) float64 {
 	return bonus
 }
 
-func getTerrainBonus(avd models.BaseStats) float64 {
+func getTerrainBonus(avd *models.BaseStats) float64 {
 	bonus := (100.0 + float64(avd.Terrain.DefenseBonus)) / 100.0
 
 	if avd.Input.Defender.Terrain.HasRiver {
-		bonus *= 1.5
+		bonus *= 1.25
 	}
 
 	return bonus
