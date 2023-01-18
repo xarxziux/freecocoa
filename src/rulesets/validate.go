@@ -46,17 +46,30 @@ func PopulateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 		return nil, fmt.Errorf("attacker HP must be an integer between 1 and %d (0 or missing defaults to %d)", attUnit.HP, attUnit.HP)
 	}
 
+	if avd.Attacker.HP == 0 {
+		avd.Attacker.HP = attUnit.HP
+	}
+
 	if avd.Defender.HP > defUnit.HP {
 		return nil, fmt.Errorf("defender HP must be an integer between 1 and %d (0 or missing defaults to %d)", defUnit.HP, defUnit.HP)
 	}
 
-	if hasOnlyOneStructure(avd.Defender.IsFortified, avd.Defender.HasFortress, avd.Defender.HasAirbase, avd.Defender.HasCity) {
-		return nil, fmt.Errorf("at most, only one of isFortified, hasFortress, hasAirbase and hasCity can be true")
+	if avd.Defender.HP == 0 {
+		avd.Defender.HP = defUnit.HP
+	}
+
+	if tooManyStructures(avd.Defender.HasFortress, avd.Defender.HasAirbase, avd.Defender.HasCity) {
+		return nil, fmt.Errorf("at most, only one of hasFortress, hasAirbase and hasCity can be true")
 	}
 
 	if avd.Defender.HasCity && avd.Defender.City.Size == 0 {
 		return nil, fmt.Errorf("city cannot be of size 0")
 	}
+
+	// No fortresses on rivers
+	// if avd.Defender.Terrain.HasRiver && avd.Defender.HasFortress {
+	//	return nil, errors.New("cannot have a fortress on a river")
+	// }
 
 	return &models.BaseStats{
 		Input: avd,
@@ -68,12 +81,8 @@ func PopulateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 	}, nil
 }
 
-func hasOnlyOneStructure(isFortified, hasFortress, hasAirbase, hasCity bool) bool {
+func tooManyStructures(hasFortress, hasAirbase, hasCity bool) bool {
 	x := 0
-
-	if isFortified {
-		x++
-	}
 
 	if hasFortress {
 		x++
@@ -87,5 +96,5 @@ func hasOnlyOneStructure(isFortified, hasFortress, hasAirbase, hasCity bool) boo
 		x++
 	}
 
-	return x < 2
+	return x > 1
 }

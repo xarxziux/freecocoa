@@ -11,18 +11,6 @@ func GetStats(avd *models.BaseStats) *models.FinalStats {
 
 	finalStats.Attacker.FP, finalStats.Defender.FP = setFirepower(avd)
 
-	if avd.Input.Attacker.HP == 0 {
-		finalStats.Attacker.HP = avd.Details.Attacker.HP
-	} else {
-		finalStats.Attacker.HP = avd.Input.Attacker.HP
-	}
-
-	if avd.Input.Defender.HP == 0 {
-		finalStats.Defender.HP = avd.Details.Defender.HP
-	} else {
-		finalStats.Defender.HP = avd.Input.Defender.HP
-	}
-
 	// Apply veteran levels
 	attackPower := avd.Details.Attacker.AP * veteranLevels[avd.Input.Attacker.VetLevel]
 	defensePower := avd.Details.Defender.DP * veteranLevels[avd.Input.Defender.VetLevel]
@@ -40,23 +28,25 @@ func GetStats(avd *models.BaseStats) *models.FinalStats {
 		defensePower *= 5
 	}
 
-	// Fortification bonuses
-	if avd.Details.Defender.Class.CanFortify && avd.Input.Defender.IsFortified {
+	// Fortification bonuses applies unless in a City
+	if avd.Details.Defender.Class.CanFortify && avd.Input.Defender.IsFortified && !avd.Input.Defender.HasCity {
 		defensePower *= 1.5
 	}
 
+	// Air, helicopter and missile bypass fortresses
 	if avd.Details.Defender.Class.CanFortify && avd.Input.Defender.HasFortress {
-		switch avd.Details.Attacker.Class.Name {
-		case "air", "helicopter", "missile":
+		switch avd.Details.Attacker.Class.NameEnum {
+		case models.Air, models.Helicopter, models.Missile:
 		default:
 			defensePower *= 2
 		}
 	}
 
+	// Airbases only protect against air, helicopter and missile
 	if avd.Details.Defender.Class.CanFortify &&
 		avd.Input.Defender.HasAirbase {
-		switch avd.Details.Attacker.Class.Name {
-		case "air", "helicopter", "missile":
+		switch avd.Details.Attacker.Class.NameEnum {
+		case models.Air, models.Helicopter, models.Missile:
 			defensePower *= 2
 		}
 	}
@@ -66,6 +56,7 @@ func GetStats(avd *models.BaseStats) *models.FinalStats {
 		defensePower *= getTerrainBonus(avd)
 	}
 
+	// Get city defense bonus
 	if avd.Input.Defender.HasCity {
 		defensePower *= getCityDefenseBonus(avd)
 	}
@@ -131,64 +122,65 @@ func getCityDefenseBonus(avd *models.BaseStats) float64 {
 	case models.Town:
 		switch avd.Details.Defender.Class.NameEnum {
 		case models.Air, models.DeepSea, models.Helicopter, models.Missile, models.Nuclear, models.Patrol, models.Sea, models.SmallSea, models.Trireme:
-			bonus = 1.0
 		default:
-			bonus = 1.5
+			bonus += 0.5
 		}
 	case models.City:
 		switch avd.Details.Defender.Class.NameEnum {
-		case models.Air, models.Helicopter, models.Missile:
-			bonus = 1.0
-		case models.Sea, models.Trireme:
-			bonus = 1.5
+		case models.Air, models.Helicopter, models.Missile, models.Nuclear:
+		case models.DeepSea, models.Patrol, models.Sea, models.SmallSea, models.Trireme:
+			bonus += 0.5
 		default:
-			bonus = 2.0
+			bonus += 1.0
 		}
 	}
 
 	if avd.Input.Defender.City.HasWalls {
-		switch avd.Details.Defender.Class.NameEnum {
+		switch avd.Details.Attacker.Class.NameEnum {
+		// TODO: Should DeepSea, Patrol and SmallSea be in here?
 		case models.Air, models.Helicopter, models.Missile, models.Sea, models.Trireme:
 		default:
-			bonus *= 2
+			bonus += 1.0
 		}
 	}
 
 	if avd.Input.Defender.City.HasCoastalDefense {
-		switch avd.Details.Defender.Class.NameEnum {
+		switch avd.Details.Attacker.Class.NameEnum {
+		// TODO: Should DeepSea, Patrol and SmallSea be in here?
 		case models.Sea, models.Trireme:
-			bonus *= 2
+			bonus += 1.0
 		}
 	}
 
 	if avd.Input.Defender.City.HasSAM {
 		switch avd.Details.Defender.Class.NameEnum {
 		case models.Air, models.Helicopter:
-			bonus *= 2
+			bonus += 1.0
 		}
 	}
 
 	if avd.Input.Defender.City.SDILevel > 0 && avd.Details.Defender.Class.NameEnum == models.Missile {
 		if avd.Input.Defender.City.IsCapital {
-			bonus *= 2
+			bonus += 0.7
 		} else {
 			switch avd.Input.Defender.City.SDILevel {
 			case 1:
-				bonus *= 1.3
+				bonus += 0.3
 			case 2:
-				bonus *= 1.7
+				bonus += 0.6
 			case 3:
-				bonus *= 2.0
+				bonus += 1.0
 			}
 		}
 	}
 
 	if avd.Input.Defender.HasGreatWall {
 		switch avd.Details.Defender.Class.NameEnum {
-		case models.Air, models.DeepSea, models.Helicopter, models.Missile, models.Nuclear, models.Patrol, models.Sea, models.SmallSea, models.Trireme:
+		// TODO: Should DeepSea, Patrol and SmallSea be in here?
+		case models.Air, models.Helicopter, models.Missile, models.Sea, models.Trireme:
 			_ = true
 		default:
-			bonus *= 1.4
+			bonus += 0.4
 		}
 	}
 
