@@ -22,7 +22,7 @@ var _ = Describe("Core", func() {
 	Describe("Combat samples", func() {
 		It("expected output matches actual output", func() {
 			for _, sample := range samples {
-				avd := models.AttackerVDefender{
+				avd := &models.AttackerVDefender{
 					Attacker: sample.AttackerIn,
 					Defender: sample.DefenderIn,
 				}

@@ -7,7 +7,7 @@ import (
 	"freecocoa/src/models"
 )
 
-func PopulateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseStats, error) {
+func PopulateInput(avd *models.AttackerVDefender, ruleset string) (*models.BaseStats, error) {
 	if avd.Defender.Terrain.Type == "" {
 		return nil, fmt.Errorf("no terrain details found")
 	}
@@ -42,20 +42,12 @@ func PopulateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 		avd.Attacker.MP = 9
 	}
 
-	if avd.Attacker.HP > attUnit.HP {
+	if avd.Attacker.HP < 0 || avd.Attacker.HP > attUnit.HP {
 		return nil, fmt.Errorf("attacker HP must be an integer between 1 and %d (0 or missing defaults to %d)", attUnit.HP, attUnit.HP)
 	}
 
-	if avd.Attacker.HP == 0 {
-		avd.Attacker.HP = attUnit.HP
-	}
-
-	if avd.Defender.HP > defUnit.HP {
+	if avd.Defender.HP < 0 || avd.Defender.HP > defUnit.HP {
 		return nil, fmt.Errorf("defender HP must be an integer between 1 and %d (0 or missing defaults to %d)", defUnit.HP, defUnit.HP)
-	}
-
-	if avd.Defender.HP == 0 {
-		avd.Defender.HP = defUnit.HP
 	}
 
 	if tooManyStructures(avd.Defender.HasFortress, avd.Defender.HasAirbase, avd.Defender.HasCity) {
@@ -72,7 +64,7 @@ func PopulateInput(avd models.AttackerVDefender, ruleset string) (*models.BaseSt
 	// }
 
 	return &models.BaseStats{
-		Input: avd,
+		Input: *avd,
 		Details: models.PairDetails{
 			Attacker: *attUnit,
 			Defender: *defUnit,

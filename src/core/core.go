@@ -9,6 +9,17 @@ var veteranLevels = [10]float64{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
 func GetStats(avd *models.BaseStats) *models.FinalStats {
 	finalStats := models.FinalStats{}
 
+	if avd.Input.Attacker.HP == 0 {
+		finalStats.Attacker.HP = avd.Details.Attacker.HP
+	} else {
+		finalStats.Attacker.HP = avd.Input.Attacker.HP
+	}
+
+	if avd.Input.Defender.HP == 0 {
+		finalStats.Defender.HP = avd.Details.Defender.HP
+	} else {
+		finalStats.Defender.HP = avd.Input.Defender.HP
+	}
 	finalStats.Attacker.FP, finalStats.Defender.FP = setFirepower(avd)
 
 	// Apply veteran levels

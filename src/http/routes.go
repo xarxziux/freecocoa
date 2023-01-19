@@ -30,8 +30,8 @@ func attack(c *fiber.Ctx) error {
 		return fmt.Errorf("unknown/unsupported ruleset %s", ruleset)
 	}
 
-	avd := models.AttackerVDefender{}
-	err := c.BodyParser(&avd)
+	avd := &models.AttackerVDefender{}
+	err := c.BodyParser(avd)
 	if err != nil {
 		return err
 	}
