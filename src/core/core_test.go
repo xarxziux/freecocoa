@@ -47,7 +47,7 @@ var _ = Describe("Core", func() {
 
 var samples = []sampleData{
 	{
-		// warriors V warriors
+		// Warriors V warriors
 		AttackerIn: models.AttackerUnit{
 			Name: "warriors",
 		},
@@ -69,7 +69,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// vet bonus
+		// Vet bonus
 		AttackerIn: models.AttackerUnit{
 			Name:     "warriors",
 			VetLevel: 3,
@@ -92,7 +92,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// movement penalty
+		// Movement penalty
 		AttackerIn: models.AttackerUnit{
 			Name: "warriors",
 			MP:   3,
@@ -115,7 +115,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// terrain bonus - forest
+		// Terrain bonus - forest
 		AttackerIn: models.AttackerUnit{
 			Name: "warriors",
 		},
@@ -137,7 +137,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// terrain bonus - mountains
+		// Terrain bonus - mountains
 		AttackerIn: models.AttackerUnit{
 			Name: "warriors",
 		},
@@ -159,7 +159,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// terrain bonus - river
+		// Terrain bonus - river
 		AttackerIn: models.AttackerUnit{
 			Name: "warriors",
 		},
@@ -182,7 +182,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// small city on river with hills
+		// Small city on river with hills
 		AttackerIn: models.AttackerUnit{
 			Name: "warriors",
 		},
@@ -209,7 +209,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// small city on river with hills attacked by a slightly damaged veteran catapult
+		// Small city on river with hills attacked by a slightly damaged veteran catapult
 		AttackerIn: models.AttackerUnit{
 			Name:     "catapult",
 			HP:       8,
@@ -238,7 +238,7 @@ var samples = []sampleData{
 		},
 	},
 	{
-		// fortress city with hills attacked by hardcore knights
+		// Fortress city with hills attacked by hardcore knights
 		AttackerIn: models.AttackerUnit{
 			Name:     "knights",
 			VetLevel: 6,
@@ -261,8 +261,132 @@ var samples = []sampleData{
 			FP: 1,
 		},
 		DefenderOut: models.DefenseStats{
-			DP: 72,
+			DP: 54,
 			HP: 10,
+			FP: 1,
+		},
+	},
+	{
+		// Musketeers in a mountain fortress attacked by dragoons
+		AttackerIn: models.AttackerUnit{
+			Name:     "dragoons",
+			VetLevel: 2,
+		},
+		DefenderIn: models.DefenderUnit{
+			Name:        "musketeers",
+			VetLevel:    1,
+			IsFortified: true,
+			HasFortress: true,
+			Terrain: models.DefenderTerrain{
+				Type: "mountains",
+			},
+		},
+		AttackerOut: models.AttackStats{
+			AP: 8.75,
+			HP: 20,
+			FP: 1,
+		},
+		DefenderOut: models.DefenseStats{
+			DP: 27,
+			HP: 20,
+			FP: 1,
+		},
+	},
+	{
+		// Fortresses work against ships
+		AttackerIn: models.AttackerUnit{
+			Name: "destroyer",
+		},
+		DefenderIn: models.DefenderUnit{
+			Name:        "musketeers",
+			VetLevel:    1,
+			IsFortified: true,
+			HasFortress: true,
+			Terrain: models.DefenderTerrain{
+				Type: "mountains",
+			},
+		},
+		AttackerOut: models.AttackStats{
+			AP: 4,
+			HP: 30,
+			FP: 1,
+		},
+		DefenderOut: models.DefenseStats{
+			DP: 27,
+			HP: 20,
+			FP: 1,
+		},
+	},
+	{
+		// ... but not aircraft
+		AttackerIn: models.AttackerUnit{
+			Name: "fighter",
+		},
+		DefenderIn: models.DefenderUnit{
+			Name:        "musketeers",
+			VetLevel:    1,
+			IsFortified: true,
+			HasFortress: true,
+			Terrain: models.DefenderTerrain{
+				Type: "mountains",
+			},
+		},
+		AttackerOut: models.AttackStats{
+			AP: 4,
+			HP: 20,
+			FP: 1,
+		},
+		DefenderOut: models.DefenseStats{
+			DP: 13.5,
+			HP: 20,
+			FP: 1,
+		},
+	},
+	{
+		// Cruise missile V AEGIS cruiser is a mismatch
+		AttackerIn: models.AttackerUnit{
+			Name: "cruise_missile",
+		},
+		DefenderIn: models.DefenderUnit{
+			Name: "aegis_cruiser",
+			Terrain: models.DefenderTerrain{
+				Type: "ocean",
+			},
+		},
+		AttackerOut: models.AttackStats{
+			AP: 10,
+			HP: 5,
+			FP: 3,
+		},
+		DefenderOut: models.DefenseStats{
+			DP: 40,
+			HP: 30,
+			FP: 1,
+		},
+	},
+	{
+		// Cruise missile V AEGIS cruiser in a city get a huge FP boost
+		AttackerIn: models.AttackerUnit{
+			Name: "cruise_missile",
+		},
+		DefenderIn: models.DefenderUnit{
+			Name:    "aegis_cruiser",
+			HasCity: true,
+			City: models.DefenderCity{
+				Size: 10,
+			},
+			Terrain: models.DefenderTerrain{
+				Type: "grassland",
+			},
+		},
+		AttackerOut: models.AttackStats{
+			AP: 10,
+			HP: 5,
+			FP: 12,
+		},
+		DefenderOut: models.DefenseStats{
+			DP: 60,
+			HP: 30,
 			FP: 1,
 		},
 	},
