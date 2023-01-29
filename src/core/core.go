@@ -2,6 +2,7 @@ package core
 
 import (
 	"freecocoa/src/models"
+	"math"
 )
 
 var veteranLevels = [10]float64{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
@@ -206,4 +207,68 @@ func getTerrainBonus(avd *models.BaseStats) float64 {
 	}
 
 	return bonus
+}
+
+func GetBuildCosts(bci *models.BuildCostInput) *models.BuildCostOutput {
+	bco := models.BuildCostOutput{}
+	cost := bci.ShieldCost
+	inc := bci.ShieldOutput
+	current := bci.ShieldCurrent
+	remaining := bci.ShieldCost - current
+	bcItems := make([]models.BuildCostItem, 0, 10)
+
+	if current >= cost {
+		bcItems = append(bcItems,
+			models.BuildCostItem{
+				ShieldCurrent:   current,
+				ShieldRemaining: 0,
+				BuyCost:         0,
+			},
+		)
+
+		bco.BuildCosts = bcItems
+
+		return &bco
+	}
+
+	bcItems = append(bcItems,
+		models.BuildCostItem{
+			ShieldCurrent:   current,
+			ShieldRemaining: remaining,
+			BuyCost:         getBuyCost(remaining),
+		},
+	)
+
+	for i := 1; i < 10; i++ {
+		current += inc
+		remaining -= inc
+
+		if current >= cost {
+			bcItems = append(bcItems,
+				models.BuildCostItem{
+					ShieldCurrent:   current,
+					ShieldRemaining: 0,
+					BuyCost:         0,
+				},
+			)
+
+			break
+		}
+
+		bcItems = append(bcItems,
+			models.BuildCostItem{
+				ShieldCurrent:   current,
+				ShieldRemaining: remaining,
+				BuyCost:         getBuyCost(remaining),
+			},
+		)
+	}
+
+	bco.BuildCosts = bcItems
+
+	return &bco
+}
+
+func getBuyCost(shields int) int {
+	return int(math.Round((2.0 * float64(shields)) + (math.Pow(float64(shields), 2) / 20.0)))
 }

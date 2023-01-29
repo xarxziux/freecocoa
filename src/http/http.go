@@ -23,6 +23,7 @@ func StartServer() {
 	app.Get("/api/v1/:ruleset/getTerrain", getTerrain)
 	app.Get("/api/v1/:ruleset/getUnits", getUnits)
 	app.Post("/api/v1/calculate", calculate)
+	app.Post("/api/v1/:ruleset/buildCost", getBuildCost)
 
 	logo := "______\n" +
 		"|  ___|\n" +

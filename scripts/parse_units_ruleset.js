@@ -13,6 +13,7 @@ const attackRX = /^attack *= (?<attack>\d*)/
 const defenseRX = /^defense *= (?<defense>\d*)/
 const hpRX = /^hitpoints *= (?<hp>\d*)/
 const fpRX = /^firepower *= (?<fp>\d*)/
+const buildCostRX = /^build_cost *= (?<bc>\d*)/
 
 const main = () => {
   const args = process.argv
@@ -119,6 +120,11 @@ const readUnitsSection = (lines) => {
     const fp = fpRX.exec(line)
     if (fp !== null) {
       console.log(`\t\tFP: ${fp.groups.fp},`)
+    }
+
+    const bc = buildCostRX.exec(line)
+    if (bc !== null) {
+      console.log(`\t\tBuildCost: ${bc.groups.bc},`)
     }
 
     const flags = flagsRX.exec(line)

@@ -73,6 +73,30 @@ func PopulateInput(avd *models.AttackerVDefender, ruleset string) (*models.BaseS
 	}, nil
 }
 
+func PopulateBuildCost(bci *models.BuildCostInput, ruleset string) error {
+	if bci.ShieldCost < 0 ||
+		bci.ShieldOutput < 0 ||
+		bci.ShieldCurrent < 0 {
+		return errors.New("int values cannot be negative")
+	}
+
+	if bci.UnitName == "" {
+		if bci.ShieldCost == 0 {
+			return errors.New("no name or cost value provided")
+		}
+
+		return nil
+	}
+
+	unit, err := getUnit(bci.UnitName, ruleset)
+	if err != nil {
+		return err
+	}
+
+	bci.ShieldCost = unit.BuildCost
+	return nil
+}
+
 func tooManyStructures(hasFortress, hasAirbase, hasCity bool) bool {
 	x := 0
 

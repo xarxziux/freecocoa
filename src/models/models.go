@@ -98,6 +98,7 @@ type UnitDetails struct {
 	DP               float64
 	HP               int
 	FP               int
+	BuildCost        int
 	CityBuster       bool
 	AirAttacker      bool
 	Horse            bool
@@ -174,4 +175,21 @@ type CombatResults struct {
 type CombinedResults struct {
 	Stats  *FinalStats    `json:"stats"`
 	Combat *CombatResults `json:"combat"`
+}
+
+type BuildCostInput struct {
+	UnitName      string `json:"unitName"`
+	ShieldCost    int    `json:"shieldCost"`
+	ShieldOutput  int    `json:"shieldOutput"`
+	ShieldCurrent int    `json:"shieldCurrent"`
+}
+
+type BuildCostItem struct {
+	ShieldCurrent   int `json:"current"`
+	ShieldRemaining int `json:"remaining"`
+	BuyCost         int `json:"buyCost"`
+}
+
+type BuildCostOutput struct {
+	BuildCosts []BuildCostItem `json:"costs"`
 }

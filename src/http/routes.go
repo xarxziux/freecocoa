@@ -70,6 +70,29 @@ func calculate(c *fiber.Ctx) error {
 	return c.JSON(combatResults)
 }
 
+func getBuildCost(c *fiber.Ctx) error {
+	ruleset := c.Params("ruleset")
+
+	if !isSupportedRuleset(ruleset) {
+		return fmt.Errorf("unknown/unsupported ruleset %s", ruleset)
+	}
+
+	bci := &models.BuildCostInput{}
+	err := c.BodyParser(bci)
+	if err != nil {
+		return err
+	}
+
+	err = rulesets.PopulateBuildCost(bci, ruleset)
+	if err != nil {
+		return err
+	}
+
+	costs := core.GetBuildCosts(bci)
+
+	return c.JSON(costs)
+}
+
 func isSupportedRuleset(rs string) bool {
 	for _, srs := range supportedRulesets {
 		if rs == srs {
