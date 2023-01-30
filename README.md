@@ -1,5 +1,26 @@
 # Freecocoa - a FreeCiv combat calculator #
 
+```
+______
+|  ___|
+| |_ _ __ ___  ___  ___ ___   ___ ___   __ _
+|  _| '__/ _ \/ _ \/ __/ _ \ / __/ _ \ / _` |
+| | | | |  __/  __/ (_| (_) | (_| (_) | (_| |
+\_| |_|  \___|\___|\___\___/ \___\___/ \__,_|
+
+     (  )   (   )  )
+      ) (   )  (  (
+      ( )  (    ) )
+      _____________
+     <_____________> ___
+     |             |/ _ \
+     |               | | |
+     |               |_| |
+  ___|             |\___/
+ /    \___________/    \
+ \_____________________/
+```
+
 To start, run the command `make run` from the root folder.  This exposes an API on port 7123 with a single endpoint: `/api/v1/LTT/attack`.
 
 Some sample queries:
