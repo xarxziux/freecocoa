@@ -40,8 +40,8 @@ func GetStats(avd *models.BaseStats) *models.FinalStats {
 		defensePower *= 5
 	}
 
-	// Fortification bonuses applies unless in a City
-	if avd.Details.Defender.Class.CanFortify && avd.Input.Defender.IsFortified && !avd.Input.Defender.HasCity {
+	// Fortification bonuses applies if fortified or in a City
+	if avd.Details.Defender.Class.CanFortify && (avd.Input.Defender.IsFortified || avd.Input.Defender.HasCity) {
 		defensePower *= 1.5
 	}
 
