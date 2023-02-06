@@ -96,6 +96,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"migrants": {
 		Name:      "Migrants",
@@ -105,6 +106,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"immigrants": {
 		Name:      "Immigrants",
@@ -114,6 +116,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"tribal_worker": {
 		Name:      "Tribal Workers",
@@ -123,6 +126,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        12,
 		FP:        1,
+		MP:        18,
 	},
 	"worker": {
 		Name:      "Workers",
@@ -132,6 +136,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        10,
 		FP:        1,
+		MP:        27,
 	},
 	"engineers": {
 		Name:      "Engineers",
@@ -141,6 +146,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        20,
 		FP:        1,
+		MP:        54,
 	},
 	"warriors": {
 		Name:      "Warriors",
@@ -150,6 +156,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        10,
 		FP:        1,
+		MP:        18,
 	},
 	"phalanx": {
 		Name:      "Phalanx",
@@ -159,6 +166,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        10,
 		FP:        1,
+		MP:        18,
 	},
 	"archers": {
 		Name:      "Archers",
@@ -168,6 +176,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        10,
 		FP:        1,
+		MP:        18,
 	},
 	"legion": {
 		Name:      "Swordsmen",
@@ -177,6 +186,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        10,
 		FP:        1,
+		MP:        18,
 	},
 	"pikemen": {
 		Name:      "Pikemen",
@@ -186,6 +196,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        3,
 		HP:        10,
 		FP:        1,
+		MP:        27,
 	},
 	"musketeers": {
 		Name:      "Musketeers",
@@ -195,6 +206,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        3,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"navy_troops": {
 		Name:      "Navy Troops",
@@ -204,6 +216,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        15,
 		FP:        1,
+		MP:        18,
 	},
 	"riflemen": {
 		Name:      "Riflemen",
@@ -213,6 +226,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        4,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"infantry": {
 		Name:      "Infantry",
@@ -222,6 +236,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        6,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"alpine_troops": {
 		Name:      "Alpine Troops",
@@ -231,6 +246,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        4,
 		HP:        20,
 		FP:        1,
+		MP:        18,
 	},
 	"partisan": {
 		Name:      "Partisan",
@@ -240,6 +256,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        5,
 		HP:        20,
 		FP:        1,
+		MP:        18,
 	},
 	"fanatics": {
 		Name:      "Fanatics",
@@ -249,6 +266,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        4,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"marines": {
 		Name:      "Marines",
@@ -258,6 +276,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        5,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"paratroopers": {
 		Name:      "Paratroopers",
@@ -267,6 +286,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        4,
 		HP:        20,
 		FP:        1,
+		MP:        27,
 	},
 	"mech_inf": {
 		Name:      "Mech. Inf.",
@@ -276,6 +296,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        6,
 		HP:        30,
 		FP:        1,
+		MP:        81,
 	},
 	"horsemen": {
 		Name:      "Horsemen",
@@ -285,6 +306,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        10,
 		FP:        1,
+		MP:        36,
 		Horse:     true,
 	},
 	"chariot": {
@@ -295,6 +317,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        10,
 		FP:        1,
+		MP:        36,
 		Horse:     true,
 	},
 	"elephants": {
@@ -305,6 +328,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        10,
 		FP:        1,
+		MP:        36,
 		Horse:     true,
 	},
 	"crusaders": {
@@ -315,6 +339,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        15,
 		FP:        1,
+		MP:        45,
 		Horse:     true,
 	},
 	"knights": {
@@ -325,6 +350,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        10,
 		FP:        1,
+		MP:        36,
 		Horse:     true,
 	},
 	"dragoons": {
@@ -335,6 +361,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        20,
 		FP:        1,
+		MP:        54,
 		Horse:     true,
 	},
 	"cavalry": {
@@ -345,6 +372,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        3,
 		HP:        20,
 		FP:        1,
+		MP:        54,
 		Horse:     true,
 	},
 	"armor": {
@@ -355,6 +383,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        5,
 		HP:        30,
 		FP:        1,
+		MP:        81,
 	},
 	"catapult": {
 		Name:       "Catapult",
@@ -364,6 +393,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:         1,
 		HP:         10,
 		FP:         1,
+		MP:         27,
 		CityBuster: true,
 	},
 	"trebuchet": {
@@ -374,6 +404,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:         1,
 		HP:         10,
 		FP:         1,
+		MP:         18,
 		CityBuster: true,
 	},
 	"cannon": {
@@ -384,6 +415,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:         1,
 		HP:         20,
 		FP:         1,
+		MP:         27,
 		CityBuster: true,
 	},
 	"artillery": {
@@ -394,6 +426,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:         2,
 		HP:         20,
 		FP:         1,
+		MP:         36,
 		CityBuster: true,
 	},
 	"howitzer": {
@@ -404,6 +437,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:         2,
 		HP:         30,
 		FP:         1,
+		MP:         81,
 		CityBuster: true,
 	},
 	"fighter": {
@@ -414,6 +448,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          4,
 		HP:          20,
 		FP:          1,
+		MP:          108,
 		AirAttacker: true,
 	},
 	"bomber": {
@@ -424,6 +459,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          1,
 		HP:          30,
 		FP:          1,
+		MP:          216,
 		AirAttacker: true,
 	},
 	"helicopter": {
@@ -434,6 +470,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          3,
 		HP:          30,
 		FP:          1,
+		MP:          108,
 		AirAttacker: true,
 	},
 	"stealth_fighter": {
@@ -444,6 +481,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          7,
 		HP:          20,
 		FP:          1,
+		MP:          162,
 		AirAttacker: true,
 	},
 	"stealth_bomber": {
@@ -454,6 +492,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          3,
 		HP:          30,
 		FP:          1,
+		MP:          324,
 		AirAttacker: true,
 	},
 	"trireme": {
@@ -464,6 +503,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              1,
 		HP:              10,
 		FP:              1,
+		MP:              72,
 		BadCityDefender: true,
 	},
 	"barge": {
@@ -474,6 +514,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              2,
 		HP:              20,
 		FP:              1,
+		MP:              81,
 		BadCityDefender: true,
 	},
 	"longboat": {
@@ -484,6 +525,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              2,
 		HP:              4,
 		FP:              1,
+		MP:              72,
 		BadCityDefender: true,
 	},
 	"war_longboat": {
@@ -494,6 +536,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              1,
 		HP:              1,
 		FP:              1,
+		MP:              63,
 		BadCityDefender: true,
 	},
 	"pirogue": {
@@ -504,6 +547,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              1,
 		HP:              5,
 		FP:              1,
+		MP:              54,
 		BadCityDefender: true,
 	},
 	"cog": {
@@ -514,6 +558,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              2,
 		HP:              8,
 		FP:              1,
+		MP:              81,
 		BadCityDefender: true,
 	},
 	"patrol_cutter": {
@@ -524,6 +569,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              2,
 		HP:              20,
 		FP:              1,
+		MP:              108,
 		BadCityDefender: true,
 	},
 	"square_rigged_caravel": {
@@ -533,6 +579,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              2,
 		HP:              12,
 		FP:              1,
+		MP:              72,
 		BadCityDefender: true,
 	},
 	"caravel": {
@@ -543,6 +590,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              2,
 		HP:              10,
 		FP:              1,
+		MP:              81,
 		BadCityDefender: true,
 	},
 	"galleon": {
@@ -553,6 +601,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              2,
 		HP:              20,
 		FP:              1,
+		MP:              108,
 		BadCityDefender: true,
 	},
 	"frigate": {
@@ -563,6 +612,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              3,
 		HP:              20,
 		FP:              1,
+		MP:              117,
 		BadCityDefender: true,
 	},
 	"flagship_frigate": {
@@ -573,6 +623,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              3,
 		HP:              22,
 		FP:              1,
+		MP:              135,
 		BadCityDefender: true,
 	},
 	"ironclad": {
@@ -583,6 +634,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              6,
 		HP:              20,
 		FP:              1,
+		MP:              90,
 		BadCityDefender: true,
 	},
 	"destroyer": {
@@ -593,6 +645,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              4,
 		HP:              30,
 		FP:              1,
+		MP:              162,
 		BadCityDefender: true,
 	},
 	"cruiser": {
@@ -603,6 +656,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              8,
 		HP:              30,
 		FP:              1,
+		MP:              135,
 		BadCityDefender: true,
 	},
 	"aegis_cruiser": {
@@ -613,6 +667,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              8,
 		HP:              30,
 		FP:              1,
+		MP:              135,
 		BadCityDefender: true,
 	},
 	"battleship": {
@@ -623,6 +678,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              14,
 		HP:              30,
 		FP:              2,
+		MP:              108,
 		BadCityDefender: true,
 	},
 	"submarine": {
@@ -633,6 +689,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              4,
 		HP:              20,
 		FP:              1,
+		MP:              108,
 		Submarine:       true,
 		BadCityDefender: true,
 	},
@@ -644,6 +701,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              4,
 		HP:              20,
 		FP:              1,
+		MP:              126,
 		Submarine:       true,
 		BadCityDefender: true,
 	},
@@ -655,6 +713,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              6,
 		HP:              20,
 		FP:              1,
+		MP:              144,
 		Submarine:       true,
 		BadCityDefender: true,
 	},
@@ -666,6 +725,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              10,
 		HP:              40,
 		FP:              1,
+		MP:              135,
 		BadCityDefender: true,
 	},
 	"transport": {
@@ -676,6 +736,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              3,
 		HP:              30,
 		FP:              1,
+		MP:              135,
 		BadCityDefender: true,
 	},
 	"advanced_torpedo": {
@@ -686,6 +747,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        2,
 		FP:        2,
+		MP:        27,
 	},
 	"missile": {
 		Name:        "Air Defense Missile",
@@ -695,6 +757,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          0,
 		HP:          2,
 		FP:          2,
+		MP:          81,
 		AirAttacker: true,
 	},
 	"cruise_missile": {
@@ -705,6 +768,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          0,
 		HP:          5,
 		FP:          3,
+		MP:          162,
 		CityBuster:  true,
 		AirAttacker: true,
 	},
@@ -716,6 +780,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          0,
 		HP:          5,
 		FP:          3,
+		MP:          315,
 		AirAttacker: true,
 	},
 	"nuclear_bomb": {
@@ -726,6 +791,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        0,
 	},
 	"nuclear": {
 		Name:        "Nuclear",
@@ -735,6 +801,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          0,
 		HP:          10,
 		FP:          1,
+		MP:          0,
 		AirAttacker: true,
 	},
 	"diplomat": {
@@ -745,6 +812,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        45,
 	},
 	"spy": {
 		Name:      "Spy",
@@ -754,6 +822,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        54,
 	},
 	"operative": {
 		Name:      "Operative",
@@ -763,6 +832,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        27,
 	},
 	"scribe": {
 		Name:      "Scribe",
@@ -772,6 +842,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        36,
 	},
 	"scholar": {
 		Name:      "Scholar",
@@ -781,6 +852,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        36,
 	},
 	"inventor": {
 		Name:      "Inventor",
@@ -790,6 +862,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        36,
 	},
 	"caravan": {
 		Name:      "Caravan",
@@ -799,6 +872,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        10,
 		FP:        1,
+		MP:        27,
 	},
 	"freight": {
 		Name:      "Freight",
@@ -808,6 +882,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        20,
 		FP:        1,
+		MP:        54,
 	},
 	"explorer": {
 		Name:      "Explorer",
@@ -817,6 +892,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        7,
 		FP:        1,
+		MP:        27,
 	},
 	"leader": {
 		Name:      "Leader",
@@ -826,6 +902,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        2,
 		HP:        20,
 		FP:        1,
+		MP:        18,
 	},
 	"barbarian_leader": {
 		Name:      "Barbarian Leader",
@@ -835,6 +912,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        0,
 		HP:        10,
 		FP:        1,
+		MP:        18,
 	},
 	"awacs": {
 		Name:      "AWACS",
@@ -844,6 +922,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        1,
 		HP:        20,
 		FP:        1,
+		MP:        315,
 	},
 	"fusion_fighter": {
 		Name:        "Fusion Fighter",
@@ -853,6 +932,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          7,
 		HP:          20,
 		FP:          2,
+		MP:          252,
 		AirAttacker: true,
 	},
 	"fusion_bomber": {
@@ -863,6 +943,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:          3,
 		HP:          30,
 		FP:          1,
+		MP:          315,
 		AirAttacker: true,
 	},
 	"fusion_battleship": {
@@ -873,6 +954,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:              12,
 		HP:              30,
 		FP:              3,
+		MP:              144,
 		BadCityDefender: true,
 	},
 	"fusion_armor": {
@@ -883,6 +965,7 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        5,
 		HP:        30,
 		FP:        2,
+		MP:        81,
 	},
 	"cargo_aircraft": {
 		Name:      "Cargo Aircraft",
@@ -892,5 +975,6 @@ var UnitStats = map[string]models.UnitDetails{
 		DP:        3,
 		HP:        30,
 		FP:        1,
+		MP:        252,
 	},
 }
