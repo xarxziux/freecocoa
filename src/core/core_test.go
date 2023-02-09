@@ -207,7 +207,7 @@ var samples = []sampleData{
 			FP: 1,
 		},
 		DefenderOut: models.DefenderBase{
-			DP: 2.8125,
+			DP: 4.2188,
 			HP: 10,
 			FP: 1,
 		},
@@ -236,7 +236,7 @@ var samples = []sampleData{
 			FP: 2,
 		},
 		DefenderOut: models.DefenderBase{
-			DP: 2.8125,
+			DP: 4.2188,
 			HP: 10,
 			FP: 1,
 		},
@@ -265,7 +265,7 @@ var samples = []sampleData{
 			FP: 1,
 		},
 		DefenderOut: models.DefenderBase{
-			DP: 54,
+			DP: 81,
 			HP: 10,
 			FP: 1,
 		},
