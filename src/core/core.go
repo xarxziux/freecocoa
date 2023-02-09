@@ -7,47 +7,48 @@ import (
 
 var veteranLevels = [10]float64{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
 
-func GetStats(avd *models.BaseStats) *models.FinalStats {
-	finalStats := models.FinalStats{}
+func GetStats(av *models.AttackValidated) *models.AttackResults {
+	attackResults := models.AttackResults{}
 
-	if avd.Input.Attacker.HP == 0 {
-		finalStats.Attacker.HP = avd.Details.Attacker.HP
+	if av.Attacker.Input.HP == 0 {
+		attackResults.Attacker.HP = av.Attacker.Details.HP
 	} else {
-		finalStats.Attacker.HP = avd.Input.Attacker.HP
+		attackResults.Attacker.HP = av.Attacker.Input.HP
 	}
 
-	if avd.Input.Defender.HP == 0 {
-		finalStats.Defender.HP = avd.Details.Defender.HP
+	if av.Defender.Input.HP == 0 {
+		attackResults.Defender.HP = av.Defender.Details.HP
 	} else {
-		finalStats.Defender.HP = avd.Input.Defender.HP
+		attackResults.Defender.HP = av.Defender.Input.HP
 	}
-	finalStats.Attacker.FP, finalStats.Defender.FP = setFirepower(avd)
+
+	attackResults.Attacker.FP, attackResults.Defender.FP = setFirepower(av)
 
 	// Apply veteran levels
-	attackPower := avd.Details.Attacker.AP * veteranLevels[avd.Input.Attacker.VetLevel]
-	defensePower := avd.Details.Defender.DP * veteranLevels[avd.Input.Defender.VetLevel]
+	attackPower := av.Attacker.Details.AP * veteranLevels[av.Attacker.Input.VetLevel]
+	defensePower := av.Defender.Details.DP * veteranLevels[av.Defender.Input.VetLevel]
 
 	// Unit V unit specifics
-	if avd.Details.Attacker.Horse && avd.Details.Defender.Name == "Pikemen" {
+	if av.Attacker.Details.Horse && av.Defender.Details.Name == "Pikemen" {
 		defensePower *= 2
 	}
 
-	if avd.Details.Attacker.Name == "Submarine" && avd.Details.Defender.Name == "Destroyer" {
+	if av.Attacker.Details.Name == "Submarine" && av.Defender.Details.Name == "Destroyer" {
 		defensePower *= 2
 	}
 
-	if avd.Details.Attacker.AirAttacker && avd.Details.Defender.Name == "AEGIS Cruiser" {
+	if av.Attacker.Details.AirAttacker && av.Defender.Details.Name == "AEGIS Cruiser" {
 		defensePower *= 5
 	}
 
 	// Fortification bonuses applies if fortified or in a City
-	if avd.Details.Defender.Class.CanFortify && (avd.Input.Defender.IsFortified || avd.Input.Defender.HasCity) {
+	if av.Defender.Details.Class.CanFortify && (av.Defender.Input.IsFortified || av.Defender.Input.HasCity) {
 		defensePower *= 1.5
 	}
 
 	// Air, helicopter and missile bypass fortresses
-	if avd.Details.Defender.Class.CanFortify && avd.Input.Defender.HasFortress {
-		switch avd.Details.Attacker.Class.NameEnum {
+	if av.Defender.Details.Class.CanFortify && av.Defender.Input.HasFortress {
+		switch av.Attacker.Details.Class.NameEnum {
 		case models.Air, models.Helicopter, models.Missile:
 		default:
 			defensePower *= 2
@@ -55,51 +56,53 @@ func GetStats(avd *models.BaseStats) *models.FinalStats {
 	}
 
 	// Airbases only protect against air, helicopter and missile
-	if avd.Details.Defender.Class.CanFortify &&
-		avd.Input.Defender.HasAirbase {
-		switch avd.Details.Attacker.Class.NameEnum {
+	if av.Defender.Details.Class.CanFortify &&
+		av.Defender.Input.HasAirbase {
+		switch av.Attacker.Details.Class.NameEnum {
 		case models.Air, models.Helicopter, models.Missile:
 			defensePower *= 2
 		}
 	}
 
 	// Terrain bonuses
-	if avd.Details.Defender.Class.TerrainDefense {
-		defensePower *= getTerrainBonus(avd)
+	if av.Defender.Details.Class.TerrainDefense {
+		defensePower *= getTerrainBonus(av)
 	}
 
 	// Get city defense bonus
-	if avd.Input.Defender.HasCity {
-		defensePower *= getCityDefenseBonus(avd)
+	if av.Defender.Input.HasCity {
+		defensePower *= getCityDefenseBonus(av)
 	}
 
 	// Apply movement point penalty
-	attackPower *= float64(avd.Input.Attacker.MP) / 9.0
+	if av.Attacker.Input.MP < 9 {
+		attackPower *= float64(av.Attacker.Input.MP) / 9.0
+	}
 
-	finalStats.Attacker.AP = attackPower
-	finalStats.Defender.DP = defensePower
+	attackResults.Attacker.AP = attackPower
+	attackResults.Defender.DP = defensePower
 
-	return &finalStats
+	return &attackResults
 }
 
 // Based on https://github.com/longturn/freeciv21/blob/51fea1b5f0cedc9361709a574c9d062b6f6f7f7c/common/combat.cpp#L352
-func setFirepower(base *models.BaseStats) (int, int) {
-	attFP := base.Details.Attacker.FP
-	defFP := base.Details.Defender.FP
+func setFirepower(av *models.AttackValidated) (int, int) {
+	attFP := av.Attacker.Details.FP
+	defFP := av.Defender.Details.FP
 
-	if base.Input.Defender.HasCity {
-		if base.Details.Attacker.CityBuster {
+	if av.Defender.Input.HasCity {
+		if av.Attacker.Details.CityBuster {
 			attFP *= 2
 		}
 
-		if base.Details.Defender.BadCityDefender {
+		if av.Defender.Details.BadCityDefender {
 			attFP *= 2
 			defFP = 1
 		}
 	}
 
-	if base.Details.Attacker.Name == "Fighter" &&
-		base.Details.Defender.Name == "Helicopter" {
+	if av.Attacker.Details.Name == "Fighter" &&
+		av.Defender.Details.Name == "Helicopter" {
 		defFP = 1
 	}
 
@@ -118,8 +121,8 @@ func getCitySize(size int) models.CityType {
 	return models.City
 }
 
-func getCityDefenseBonus(avd *models.BaseStats) float64 {
-	citySize := getCitySize(avd.Input.Defender.City.Size)
+func getCityDefenseBonus(av *models.AttackValidated) float64 {
+	citySize := getCitySize(av.City.Size)
 
 	if citySize == models.NoCity {
 		panic("Validation error: city size 0")
@@ -132,13 +135,13 @@ func getCityDefenseBonus(avd *models.BaseStats) float64 {
 	// default to on for everything else.
 	switch citySize {
 	case models.Town:
-		switch avd.Details.Defender.Class.NameEnum {
+		switch av.Defender.Details.Class.NameEnum {
 		case models.Air, models.DeepSea, models.Helicopter, models.Missile, models.Nuclear, models.Patrol, models.Sea, models.SmallSea, models.Trireme:
 		default:
 			bonus += 0.5
 		}
 	case models.City:
-		switch avd.Details.Defender.Class.NameEnum {
+		switch av.Defender.Details.Class.NameEnum {
 		case models.Air, models.Helicopter, models.Missile, models.Nuclear:
 		case models.DeepSea, models.Patrol, models.Sea, models.SmallSea, models.Trireme:
 			bonus += 0.5
@@ -147,8 +150,8 @@ func getCityDefenseBonus(avd *models.BaseStats) float64 {
 		}
 	}
 
-	if avd.Input.Defender.City.HasWalls {
-		switch avd.Details.Attacker.Class.NameEnum {
+	if av.City.HasWalls {
+		switch av.Attacker.Details.Class.NameEnum {
 		// TODO: Should DeepSea, Patrol and SmallSea be in here?
 		case models.Air, models.Helicopter, models.Missile, models.Sea, models.Trireme:
 		default:
@@ -156,26 +159,26 @@ func getCityDefenseBonus(avd *models.BaseStats) float64 {
 		}
 	}
 
-	if avd.Input.Defender.City.HasCoastalDefense {
-		switch avd.Details.Attacker.Class.NameEnum {
+	if av.City.HasCoastalDefense {
+		switch av.Attacker.Details.Class.NameEnum {
 		// TODO: Should DeepSea, Patrol and SmallSea be in here?
 		case models.Sea, models.Trireme:
 			bonus += 1.0
 		}
 	}
 
-	if avd.Input.Defender.City.HasSAM {
-		switch avd.Details.Defender.Class.NameEnum {
+	if av.City.HasSAM {
+		switch av.Defender.Details.Class.NameEnum {
 		case models.Air, models.Helicopter:
 			bonus += 1.0
 		}
 	}
 
-	if avd.Input.Defender.City.SDILevel > 0 && avd.Details.Defender.Class.NameEnum == models.Missile {
-		if avd.Input.Defender.City.IsCapital {
+	if av.City.SDILevel > 0 && av.Defender.Details.Class.NameEnum == models.Missile {
+		if av.City.IsCapital {
 			bonus += 0.7
 		} else {
-			switch avd.Input.Defender.City.SDILevel {
+			switch av.City.SDILevel {
 			case 1:
 				bonus += 0.3
 			case 2:
@@ -186,8 +189,8 @@ func getCityDefenseBonus(avd *models.BaseStats) float64 {
 		}
 	}
 
-	if avd.Input.Defender.HasGreatWall {
-		switch avd.Details.Defender.Class.NameEnum {
+	if av.Defender.Input.HasGreatWall {
+		switch av.Defender.Details.Class.NameEnum {
 		// TODO: Should DeepSea, Patrol and SmallSea be in here?
 		case models.Air, models.Helicopter, models.Missile, models.Sea, models.Trireme:
 			_ = true
@@ -199,10 +202,10 @@ func getCityDefenseBonus(avd *models.BaseStats) float64 {
 	return bonus
 }
 
-func getTerrainBonus(avd *models.BaseStats) float64 {
-	bonus := (100.0 + float64(avd.Terrain.DefenseBonus)) / 100.0
+func getTerrainBonus(av *models.AttackValidated) float64 {
+	bonus := (100.0 + float64(av.Terrain.Details.DefenseBonus)) / 100.0
 
-	if avd.Input.Defender.Terrain.HasRiver {
+	if av.Terrain.Input.HasRiver {
 		bonus *= 1.25
 	}
 

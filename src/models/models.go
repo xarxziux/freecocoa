@@ -1,5 +1,6 @@
 package models
 
+// Enums
 type CityType int
 type UnitClassName int
 type TerrainClass int
@@ -53,33 +54,68 @@ const (
 	OceanicClass
 )
 
-type TerrainType struct {
-	Name         string
-	Class        TerrainClass
-	DefenseBonus int
-	CanHaveRiver bool
-	NoCities     bool
-	NoFortify    bool
-	UnsafeCoast  bool
+// Input stats: the data structures in the original requests
+type AttackerInput struct {
+	Name     string `json:"name"`
+	VetLevel int    `json:"vetLevel"`
+	HP       int    `json:"hp"`
+	MP       int    `json:"mp"`
 }
 
-type AttackStats struct {
+type DefenderInput struct {
+	Name         string `json:"name"`
+	VetLevel     int    `json:"vetLevel"`
+	HP           int    `json:"hp"`
+	IsFortified  bool   `json:"isFortified"`
+	HasFortress  bool   `json:"hasFortress"`
+	HasAirbase   bool   `json:"isInAirbase"`
+	HasCity      bool   `json:"hasCity"`
+	HasGreatWall bool   `json:"hasGreatWall"`
+}
+
+type CityInput struct {
+	Size              int  `json:"size"`
+	HasWalls          bool `json:"hasWalls"`
+	HasCoastalDefense bool `json:"hasCoastalDefense"`
+	HasSAM            bool `json:"hasSAM"`
+	SDILevel          int  `json:"sdiLevel"`
+	IsCapital         bool `json:"isCapital"`
+}
+
+type TerrainInput struct {
+	Type     string `json:"type"`
+	HasRiver bool   `json:"hasRiver"`
+}
+
+// Endpoint stats: full data structures used by the various endpoints
+type AttackInput struct {
+	Attacker AttackerInput `json:"attacker"`
+	Defender DefenderInput `json:"defender"`
+	City     CityInput     `json:"city"`
+	Terrain  TerrainInput  `json:"terrain"`
+}
+
+type AttackAllInput struct {
+	Attacker []AttackerInput `json:"attacker"`
+	Defender []DefenderInput `json:"defender"`
+	City     *CityInput      `json:"city"`
+	Terrain  TerrainInput    `json:"terrain"`
+}
+
+// Base stats: the basic, modifiable, unit-specific stats when all factors have been calculated
+type AttackerBase struct {
 	AP float64 `json:"attackPower"`
 	HP int     `json:"hitpoints"`
 	FP int     `json:"firepower"`
 }
 
-type DefenseStats struct {
+type DefenderBase struct {
 	DP float64 `json:"defensePower"`
 	HP int     `json:"hitpoints"`
 	FP int     `json:"firepower"`
 }
 
-type FinalStats struct {
-	Attacker AttackStats  `json:"attacker"`
-	Defender DefenseStats `json:"defender"`
-}
-
+// Detail stats: fixed stats shared by all units and terrain of the same type
 type UnitClass struct {
 	NameEnum         UnitClassName `json:"-"`
 	Name             string
@@ -98,6 +134,7 @@ type UnitDetails struct {
 	DP               float64
 	HP               int
 	FP               int
+	MP               int
 	BuildCost        int
 	CityBuster       bool
 	AirAttacker      bool
@@ -108,55 +145,61 @@ type UnitDetails struct {
 	CantFortify      bool
 }
 
-type PairDetails struct {
-	Attacker UnitDetails
-	Defender UnitDetails
+type TerrainDetails struct {
+	Name         string
+	Class        TerrainClass
+	DefenseBonus int
+	CanHaveRiver bool
+	NoCities     bool
+	NoFortify    bool
+	UnsafeCoast  bool
 }
 
-type DefenderCity struct {
-	Size              int  `json:"size"`
-	HasWalls          bool `json:"hasWalls"`
-	HasCoastalDefense bool `json:"hasCoastalDefense"`
-	HasSAM            bool `json:"hasSAM"`
-	SDILevel          int  `json:"sdiLevel"`
-	IsCapital         bool `json:"isCapital"`
+// Pair stats: combine fixed and modifiable stats
+type AttackerPair struct {
+	Base    AttackerBase
+	Details UnitDetails
 }
 
-type DefenderTerrain struct {
-	Type     string `json:"type"`
-	HasRiver bool   `json:"hasRiver"`
+type DefenderPair struct {
+	Base    DefenderBase
+	Details UnitDetails
 }
 
-type DefenderUnit struct {
-	Name         string `json:"name"`
-	VetLevel     int    `json:"vetLevel"`
-	HP           int    `json:"hp"`
-	IsFortified  bool   `json:"isFortified"`
-	HasFortress  bool   `json:"hasFortress"`
-	HasAirbase   bool   `json:"isInAirbase"`
-	HasCity      bool   `json:"hasCity"`
-	HasGreatWall bool   `json:"hasGreatWall"`
-
-	City    DefenderCity    `json:"city"`
-	Terrain DefenderTerrain `json:"terrain"`
+// Validated stats
+type AttackerValidated struct {
+	Input   AttackerInput
+	Details UnitDetails
 }
 
-type AttackerUnit struct {
-	Name     string `json:"name"`
-	VetLevel int    `json:"vetLevel"`
-	HP       int    `json:"hp"`
-	MP       int    `json:"mp"`
+type DefenderValidated struct {
+	Input   DefenderInput
+	Details UnitDetails
 }
 
-type AttackerVDefender struct {
-	Attacker AttackerUnit `json:"attacker"`
-	Defender DefenderUnit `json:"defender"`
+type TerrainValidated struct {
+	Input   TerrainInput
+	Details TerrainDetails
 }
 
-type BaseStats struct {
-	Input   AttackerVDefender
-	Details PairDetails
-	Terrain TerrainType
+type AttackValidated struct {
+	Attacker AttackerValidated `json:"attacker"`
+	Defender DefenderValidated `json:"defender"`
+	City     CityInput         `json:"city"`
+	Terrain  TerrainValidated  `json:"terrain"`
+}
+
+type AttackAllValidated struct {
+	Attackers []*AttackerInput `json:"attacker"`
+	Defenders []*DefenderInput `json:"defender"`
+	City      *CityInput       `json:"city"`
+	Terrain   TerrainDetails   `json:"terrain"`
+}
+
+// Results stats: the final values returned by the endpoints
+type AttackResults struct {
+	Attacker AttackerBase `json:"attacker"`
+	Defender DefenderBase `json:"defender"`
 }
 
 type CombatResult struct {
@@ -173,10 +216,11 @@ type CombatResults struct {
 }
 
 type CombinedResults struct {
-	Stats  *FinalStats    `json:"stats"`
+	Stats  *AttackResults `json:"stats"`
 	Combat *CombatResults `json:"combat"`
 }
 
+// Data types for the buildCost endpoint
 type BuildCostInput struct {
 	UnitName      string `json:"unitName"`
 	ShieldCost    int    `json:"shieldCost"`

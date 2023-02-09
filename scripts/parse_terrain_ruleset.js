@@ -31,7 +31,7 @@ import (
 )
 
 // TerrainStats lists all units combat stats as extracted from units.ruleset.
-var TerrainStats = map[string]models.TerrainType{`)
+var TerrainStats = map[string]models.TerrainDetails{`)
 
   while (line) {
     const header = headerRX.exec(line)

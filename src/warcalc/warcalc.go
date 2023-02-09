@@ -118,7 +118,7 @@ func exphp(lp float64, hp1, hp2, fp1, fp2 int) float64 {
 	return dh[hp1][hp2]
 }
 
-func Warcalc(avd *models.FinalStats) *models.CombatResults {
+func Warcalc(avd *models.AttackResults) *models.CombatResults {
 	astr := avd.Attacker.AP
 	ahp := avd.Attacker.HP
 	afp := avd.Attacker.FP

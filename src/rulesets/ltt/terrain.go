@@ -8,7 +8,7 @@ import (
 )
 
 // TerrainStats lists all units combat stats as extracted from units.ruleset.
-var TerrainStats = map[string]models.TerrainType{
+var TerrainStats = map[string]models.TerrainDetails{
 	"inaccesible": {
 		Name:         "Inaccessible",
 		Class:        models.LandClass,

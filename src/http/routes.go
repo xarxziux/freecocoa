@@ -1,58 +1,39 @@
 package http
 
 import (
-	"fmt"
-	"sort"
-
 	"freecocoa/src/core"
 	"freecocoa/src/models"
 	"freecocoa/src/rulesets"
-	"freecocoa/src/rulesets/lt75"
-	"freecocoa/src/rulesets/lt76"
-	"freecocoa/src/rulesets/ltt"
-	"freecocoa/src/rulesets/ltx"
 	"freecocoa/src/warcalc"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-var supportedRulesets []string = []string{"ltt", "ltx", "lt75", "lt76"}
-
-const LTT = "ltt"
-const LTX = "ltx"
-const LT75 = "lt75"
-const LT76 = "lt76"
-
 func attack(c *fiber.Ctx) error {
 	ruleset := c.Params("ruleset")
-
-	if !isSupportedRuleset(ruleset) {
-		return fmt.Errorf("unknown/unsupported ruleset %s", ruleset)
-	}
-
-	avd := &models.AttackerVDefender{}
-	err := c.BodyParser(avd)
+	ai := &models.AttackInput{}
+	err := c.BodyParser(ai)
 	if err != nil {
 		return err
 	}
 
-	baseStats, err := rulesets.PopulateInput(avd, ruleset)
+	validatedStats, err := rulesets.PopulateInput(ai, ruleset)
 	if err != nil {
 		return err
 	}
 
-	finalStats := core.GetStats(baseStats)
-	combatResults := warcalc.Warcalc(finalStats)
+	attackResults := core.GetStats(validatedStats)
+	combatResults := warcalc.Warcalc(attackResults)
 
 	return c.JSON(models.CombinedResults{
-		Stats:  finalStats,
+		Stats:  attackResults,
 		Combat: combatResults,
 	})
 }
 
 func calculate(c *fiber.Ctx) error {
-	avd := models.FinalStats{}
-	err := c.BodyParser(&avd)
+	ar := models.AttackResults{}
+	err := c.BodyParser(&ar)
 	if err != nil {
 		return err
 	}
@@ -65,18 +46,13 @@ func calculate(c *fiber.Ctx) error {
 		}
 	*/
 
-	combatResults := warcalc.Warcalc(&avd)
+	combatResults := warcalc.Warcalc(&ar)
 
 	return c.JSON(combatResults)
 }
 
 func getBuildCost(c *fiber.Ctx) error {
 	ruleset := c.Params("ruleset")
-
-	if !isSupportedRuleset(ruleset) {
-		return fmt.Errorf("unknown/unsupported ruleset %s", ruleset)
-	}
-
 	bci := &models.BuildCostInput{}
 	err := c.BodyParser(bci)
 	if err != nil {
@@ -93,78 +69,24 @@ func getBuildCost(c *fiber.Ctx) error {
 	return c.JSON(costs)
 }
 
-func isSupportedRuleset(rs string) bool {
-	for _, srs := range supportedRulesets {
-		if rs == srs {
-			return true
-		}
-	}
-
-	return false
-}
-
 func getTerrain(c *fiber.Ctx) error {
 	ruleset := c.Params("ruleset")
+	knownTerrain, err := rulesets.GetAllTerrain(ruleset)
 
-	if !isSupportedRuleset(ruleset) {
-		return fmt.Errorf("unknown/unsupported ruleset %s", ruleset)
+	if err != nil {
+		return err
 	}
-
-	knownTerrain := make([]string, 0)
-
-	switch ruleset {
-	case LTT:
-		for terrain := range ltt.TerrainStats {
-			knownTerrain = append(knownTerrain, terrain)
-		}
-	case LTX:
-		for terrain := range ltx.TerrainStats {
-			knownTerrain = append(knownTerrain, terrain)
-		}
-	case LT75:
-		for terrain := range lt75.TerrainStats {
-			knownTerrain = append(knownTerrain, terrain)
-		}
-	case LT76:
-		for terrain := range lt76.TerrainStats {
-			knownTerrain = append(knownTerrain, terrain)
-		}
-	}
-
-	sort.Strings(knownTerrain)
 
 	return c.JSON(knownTerrain)
 }
 
 func getUnits(c *fiber.Ctx) error {
 	ruleset := c.Params("ruleset")
+	knownUnits, err := rulesets.GetAllUnits(ruleset)
 
-	if !isSupportedRuleset(ruleset) {
-		return fmt.Errorf("unknown/unsupported ruleset %s", ruleset)
+	if err != nil {
+		return err
 	}
-
-	knownUnits := make([]string, 0)
-
-	switch ruleset {
-	case LTT:
-		for units := range ltt.UnitStats {
-			knownUnits = append(knownUnits, units)
-		}
-	case LTX:
-		for units := range ltx.UnitStats {
-			knownUnits = append(knownUnits, units)
-		}
-	case LT75:
-		for units := range lt75.UnitStats {
-			knownUnits = append(knownUnits, units)
-		}
-	case LT76:
-		for units := range lt76.UnitStats {
-			knownUnits = append(knownUnits, units)
-		}
-	}
-
-	sort.Strings(knownUnits)
 
 	return c.JSON(knownUnits)
 }
