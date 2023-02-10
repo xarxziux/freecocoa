@@ -96,10 +96,10 @@ type AttackInput struct {
 }
 
 type AttackAllInput struct {
-	Attacker []AttackerInput `json:"attacker"`
-	Defender []DefenderInput `json:"defender"`
-	City     *CityInput      `json:"city"`
-	Terrain  TerrainInput    `json:"terrain"`
+	Attackers []AttackerInput `json:"attackers"`
+	Defenders []DefenderInput `json:"defenders"`
+	City      CityInput       `json:"city"`
+	Terrain   TerrainInput    `json:"terrain"`
 }
 
 // Base stats: the basic, modifiable, unit-specific stats when all factors have been calculated
@@ -107,12 +107,14 @@ type AttackerBase struct {
 	AP float64 `json:"attackPower"`
 	HP int     `json:"hitpoints"`
 	FP int     `json:"firepower"`
+	MP int     `json:"movementPoints,omitempty"`
 }
 
 type DefenderBase struct {
 	DP float64 `json:"defensePower"`
 	HP int     `json:"hitpoints"`
 	FP int     `json:"firepower"`
+	MP int     `json:"movementPoints,omitempty"`
 }
 
 // Detail stats: fixed stats shared by all units and terrain of the same type
@@ -190,10 +192,10 @@ type AttackValidated struct {
 }
 
 type AttackAllValidated struct {
-	Attackers []*AttackerInput `json:"attacker"`
-	Defenders []*DefenderInput `json:"defender"`
-	City      *CityInput       `json:"city"`
-	Terrain   TerrainDetails   `json:"terrain"`
+	Attackers []*AttackerValidated `json:"attacker"`
+	Defenders []*DefenderValidated `json:"defender"`
+	City      CityInput            `json:"city"`
+	Terrain   TerrainValidated     `json:"terrain"`
 }
 
 // Results stats: the final values returned by the endpoints
@@ -237,3 +239,5 @@ type BuildCostItem struct {
 type BuildCostOutput struct {
 	BuildCosts []BuildCostItem `json:"costs"`
 }
+
+var Exists = struct{}{}

@@ -24,6 +24,7 @@ func StartServer() {
 	app.Get("/api/v1/:ruleset/getUnits", getUnits)
 	app.Post("/api/v1/calculate", calculate)
 	app.Post("/api/v1/:ruleset/buildCost", getBuildCost)
+	app.Post("/api/v1/:ruleset/attack", attackAll)
 
 	logo := "______\n" +
 		"|  ___|\n" +

@@ -3,6 +3,7 @@ package core
 import (
 	"freecocoa/src/models"
 	"math"
+	"math/rand"
 )
 
 var veteranLevels = [10]float64{1, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5}
@@ -274,4 +275,68 @@ func GetBuildCosts(bci *models.BuildCostInput) *models.BuildCostOutput {
 
 func getBuyCost(shields int) int {
 	return int(math.Round((2.0 * float64(shields)) + (math.Pow(float64(shields), 2) / 20.0)))
+}
+
+func unitVunit(attacker models.AttackerPair, defender models.DefenderPair) (*models.AttackerPair, *models.DefenderPair) {
+	attAP := attacker.Base.AP
+	attInitHP := attacker.Base.HP
+	attHP := attacker.Base.HP
+	attFP := attacker.Base.FP
+	attMP := attacker.Base.MP
+	defDP := defender.Base.DP
+	defInitHP := defender.Base.HP
+	defHP := defender.Base.HP
+	defFP := defender.Base.FP
+	defMP := defender.Base.MP
+	pool := attAP + defDP
+
+	for {
+		r := rand.Float64() * pool
+
+		if r <= defDP {
+			attHP -= defFP
+		} else {
+			defHP -= attFP
+		}
+
+		if attHP <= 0 || defHP <= 0 {
+			break
+		}
+	}
+
+	if attHP <= 0 {
+		hpDelta := defInitHP - defHP
+		mpDelta := int(math.Round((float64(hpDelta) / float64(defender.Details.HP)) * float64(defender.Details.MP)))
+
+		if mpDelta > defMP {
+			mpDelta = defMP
+		}
+
+		return nil, &models.DefenderPair{
+			Base: models.DefenderBase{
+				DP: defDP,
+				HP: defHP,
+				FP: defFP,
+				MP: defMP - mpDelta,
+			},
+			Details: defender.Details,
+		}
+	}
+
+	hpDelta := attInitHP - attHP
+	mpDelta := int(math.Round((float64(hpDelta) / float64(attacker.Details.HP)) * float64(attacker.Details.MP)))
+
+	if mpDelta > attMP {
+		mpDelta = attMP
+	}
+
+	return &models.AttackerPair{
+		Base: models.AttackerBase{
+			AP: attAP,
+			HP: attHP,
+			FP: attFP,
+			MP: attMP - mpDelta,
+		},
+		Details: attacker.Details,
+	}, nil
 }

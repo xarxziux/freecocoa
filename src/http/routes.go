@@ -90,3 +90,30 @@ func getUnits(c *fiber.Ctx) error {
 
 	return c.JSON(knownUnits)
 }
+
+func attackAll(c *fiber.Ctx) error {
+	ruleset := c.Params("ruleset")
+
+	aai := &models.AttackAllInput{}
+	err := c.BodyParser(aai)
+	if err != nil {
+		return err
+	}
+
+	validated, err := rulesets.PopulateSim(aai, ruleset)
+	if err != nil {
+		return err
+	}
+
+	// finalStats := core.GetStats(validated)
+	// combatResults := warcalc.Warcalc(finalStats)
+
+	//	return c.JSON(models.CombinedResults{
+	//	Stats:  finalStats,
+	//	Combat: combatResults,
+	// })
+
+	_ = validated
+
+	return c.JSON("unimplemented")
+}
